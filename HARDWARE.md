@@ -1,5 +1,0 @@
-## Farm
-
-## Environment
-
-## Plant
