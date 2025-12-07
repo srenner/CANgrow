@@ -1,0 +1,53 @@
+# Node Responsibilities
+
+## Farm Node
+
+### Logic
+
+- Receive and log all CAN messages in SQLite
+- Archive CAN messages and replace with summary records
+- Maintain lighting schedules
+- Maintain heating range preferences
+- Maintain humdity range preferences
+- Host API
+- Host web frontend
+
+## Environment Nodes
+
+### Logic
+
+- Read environment temperature
+- Read environment humidity
+- Read and analyze environment gas
+- Trigger relay for environment lighting.
+- Trigger relay for environment heating.
+
+### CAN
+
+- Rx desired temperature range
+- Rx desired humidity range
+- Rx desired light status
+- Tx temperature
+- Tx humdity
+- Tx gas
+- Tx light status
+- Tx humdifier status
+
+## Plant Nodes
+
+### Logic
+
+- Read soil moisture
+- Read soil temperature
+- Activate water valve on
+- Read water flow
+- Activate water valve off
+- Cache data locally if Environment node goes offline
+
+### CAN
+
+- Tx soil moisture
+- Tx soil temperature
+- Tx water valve status
+- Tx water flow data (?)
+- Rx ping from Environment node
