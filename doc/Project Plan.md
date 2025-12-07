@@ -19,11 +19,12 @@
 - Read environment temperature
 - Read environment humidity
 - Read and analyze environment gas
-- Trigger relay for environment lighting.
-- Trigger relay for environment heating.
+- Trigger relay for environment lighting
+- Trigger relay for environment heating
 
 ### CAN
 
+- Rx ping from Farm node
 - Rx desired temperature range
 - Rx desired humidity range
 - Rx desired light status
