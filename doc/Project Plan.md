@@ -52,3 +52,34 @@
 - Tx water valve status
 - Tx water flow data (?)
 - Rx ping from Environment node
+
+### Pseudocode
+
+```
+while(true)
+{
+    var soilMoisture = readSoilMoisture()
+    var soilTemperature = readSoilTemperature()
+
+    CAN.send(soilMoisture)
+    CAN.send(soilTemperature)
+    
+    var waterValveStatus = readWaterValve()
+
+    if(plantNeedsWater())
+    {
+        waterValve.set(true)
+    }
+    else
+    {
+        waterValve.set(false)
+    }
+}
+
+function calculateFlowRate()
+{
+    // measure pulses with timestamps
+    // total water volume over period calculated by pulse count
+    // flow rate calculated with pulses per length of time, possibly 1s
+}
+```
