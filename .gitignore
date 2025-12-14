@@ -1,1 +1,3 @@
 *.pyc
+src/farm/database/cangrow.db
+.vscode/settings.json
