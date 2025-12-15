@@ -82,3 +82,15 @@ class PlantHistory(SQLModel, table=True):
     plant_id: int | None = Field(default=None, foreign_key="plant.id")
     soil_moisture: float
 
+class PlantObservation(SQLModel, table=True):
+    """
+    Subjective notes about a Plant at a given [created_at]
+    """
+
+    id: int | None = Field(default=None, primary_key=True)
+    plant_id: int | None = Field(default=None, foreign_key="plant.id")
+    height_cm: float | None
+    subjective_notes: str
+    subjective_score: int
+    created_at: int = Field(default=int(time.time()))
+

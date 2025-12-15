@@ -13,7 +13,7 @@ For development, start the server with `fastapi dev src/farm/api/main.py`
 
 ## Environment
 
-The Farm can have 1 or more Environments. Each Environment has its own temperature, humidity, and light schedule. If you have multiple rooms or multiple tents, each one is a separate environment. Each environment runs on a Raspberry Pi RP2040 microcontroller with a MCP25625 CAN Controller chip.
+The Farm can have 1 or more Environments. Each Environment has its own temperature, humidity, and light schedule. If you have multiple rooms or multiple tents, each one is a separate Environment. Each Environment runs on a Raspberry Pi RP2040 microcontroller with a MCP25625 CAN Controller chip.
 
 - Microcontroller - [Adafruit RP2040 CAN Bus Feather with MCP2515 CAN Controller - STEMMA QT](https://www.adafruit.com/product/5724)
 - Environment sensor - [Adafruit BME688 - Temperature, Humidity, Pressure and Gas Sensor - STEMMA QT](https://www.adafruit.com/product/5046)
