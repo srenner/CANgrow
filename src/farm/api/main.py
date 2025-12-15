@@ -3,6 +3,7 @@ from sqlmodel import Field, Session, SQLModel, create_engine, select
 from contextlib import asynccontextmanager
 import time
 from models import Environment, EnvironmentProfile
+from models import Plant
 
 sqlite_file_name = "cangrow.db"
 sqlite_url = f"sqlite:///src/farm/database/{sqlite_file_name}"
@@ -20,6 +21,8 @@ async def lifespan(app: FastAPI):
     print("Shutdown at " )
 
 app = FastAPI(lifespan=lifespan)
+
+### ENVIRONMENT ENDPOINTS #####################################################
 
 @app.get("/environment")
 def read_environments():
@@ -48,4 +51,20 @@ def create_environment_profile(environment_profile: EnvironmentProfile):
         session.commit()
         session.refresh(environment_profile)
         return environment_profile
+
+### PLANT ENDPOINTS ###########################################################
+
+@app.get("/plant")
+def read_plants():
+    with Session(engine) as session:
+        plants = session.exec(select(Plant)).all()
+        return plants
     
+
+@app.post("/plant")
+def create_plant(plant: Plant):
+    with Session(engine) as session:
+        session.add(plant)
+        session.commit()
+        session.refresh(plant)
+        return plant
