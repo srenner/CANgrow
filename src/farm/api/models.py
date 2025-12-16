@@ -1,47 +1,55 @@
 from sqlmodel import SQLModel, Field
 import time
 
+class BaseTable(SQLModel, table=False):
+    """
+    Common metadata fields
+    """
+
+    created_at: int = Field(default_factory=lambda: int(time.time()))
+    is_active: bool = Field(default=True)
+
 ### ENVIRONMENT MODELS ########################################################
 
-class Environment(SQLModel, table=True):
+class Environment(BaseTable, table=True):
     """
     Represents the Environment that Plants grow in. This could be a room in a building or a tent.
     """
-
+    
     id: int | None = Field(default=None, primary_key=True)
     can_id: str = Field(index=True)
     name: str
-    created_at: int = Field(default=int(time.time()))
-    sort_order: int
-    is_active: bool = Field(default=True)
+    sort_order: int = Field(default=0)
 
-class EnvironmentProfile(SQLModel, table=True):
+class EnvironmentProfile(BaseTable, table=True):
     """
-    Represents a grouping of EnvironmentTarget settings
+    Represents a grouping of EnvironmentTarget settings.
+
+    Examples:
+        - "Seedling": Lights are on continuously.
+        - "Growth Stage": Lights are on 18h per day.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
     name: str
-    descr: str
-    is_active: bool = Field(default=True)
-    created_at: int = Field(default=int(time.time()))
+    descr: str | None
 
 class EnvironmentHistory(SQLModel, table=True):
     """
-    Represents the true condition for an Environment at the specified [datetime]
+    Represents the true condition for an Environment at the specified [datetime].
     """
+
     id: int | None = Field(default=None, primary_key=True)
     environment_id: int | None = Field(default=None, foreign_key="environment.id")
-    light_status: bool
-    heat_status: bool
-    temperature: float
-    humidity: float
-    gas: float
-    datetime: int
+    light_status: bool | None
+    heat_status: bool | None
+    temperature: float | None
+    humidity: float | None
+    gas: float | None
+    datetime: int = Field(default=int(time.time()))
 
-class EnvironmentTarget(SQLModel, table=True):
+class EnvironmentTarget(BaseTable, table=True):
     """
-    Represents the ideal condition for an Environment at the specified [timestamp] time of day
+    Represents the ideal condition for an Environment at the specified [timestamp] time of day.
     """
 
     id: int | None = Field(default=None, primary_key=True)
@@ -51,16 +59,15 @@ class EnvironmentTarget(SQLModel, table=True):
     target_temperature: float
     target_humidity: float
     # possibly add target_gas if it makes sense
-    created_at: int = Field(default=int(time.time()))
 
 ### PLANT MODELS ##############################################################
 
 # unsure if batches are necessary
 # class PlantBatch(SQLModel, table=True)
 
-class Plant(SQLModel, table=True):
+class Plant(BaseTable, table=True):
     """
-    A Plant node that monitors a single 
+    A Plant node that monitors a single real world plant.
     """
 
     id: int | None = Field(default=None, primary_key=True)
@@ -68,42 +75,44 @@ class Plant(SQLModel, table=True):
     name: str
     can_id: str = Field(index=True)
     environment_id: int | None = Field(default=None, foreign_key="environment.id")
-    created_at: int = Field(default=int(time.time()))
-    sort_order: int
     auto_watering: bool
-    is_active: bool = Field(default=True)
+    sort_order: int = Field(default=0)
 
 class PlantHistory(SQLModel, table=True):
     """
-    Represents a status of a Plant at the specified [datetime]
+    Represents a status of a Plant at the specified [datetime].
     """
 
     id: int | None = Field(default=None, primary_key=True)
     plant_id: int = Field(foreign_key="plant.id")
-    soil_moisture: float
-    soil_temperature: float
+    soil_moisture: float | None
+    soil_temperature: float | None
+    datetime: int = Field(default=int(time.time()))
 
 class PlantObservation(SQLModel, table=True):
     """
-    Subjective notes about a Plant at a given [created_at]
+    Subjective notes about a Plant at a given [created_at].
     """
 
     id: int | None = Field(default=None, primary_key=True)
     plant_id: int = Field(foreign_key="plant.id")
     height_cm: float | None
     subjective_notes: str
-    subjective_score: int
+    subjective_score: int | None
     created_at: int = Field(default=int(time.time()))
 
-class PhotoLink(SQLModel, table=True):
+### MISC ######################################################################
+
+class CameraLink(BaseTable, table=True):
     """
-    Represents an IP camera located in an Environment or pointed at a specific Plant
+    Represents an IP camera located in an Environment or pointed at a specific Plant.
     """
 
     id: int | None = Field(default=None, primary_key=True)
     plant_id: int | None = Field(default=None, foreign_key="plant.id")
     environment_id: int | None = Field(default=None, foreign_key="environment.id")
-    photo_url: str
-    descr: str
-    created_at: int = Field(default=int(time.time()))
-    is_active: bool = Field(default=True)
+    photo_url: str | None
+    video_url: str | None
+    descr: str | None
+    sort_order: int = Field(default=0)
+    

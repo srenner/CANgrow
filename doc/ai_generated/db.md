@@ -6,18 +6,18 @@
 erDiagram
     Environment ||--o{ EnvironmentHistory : has
     Environment ||--o{ Plant : contains
-    Environment ||--o{ PhotoLink : monitors
+    Environment ||--o{ CameraLink : monitors
     EnvironmentProfile ||--o{ EnvironmentTarget : defines
     Plant ||--o{ PlantHistory : records
     Plant ||--o{ PlantObservation : observes
-    Plant ||--o{ PhotoLink : monitors
+    Plant ||--o{ CameraLink : monitors
 
     Environment {
         int id PK
         string can_id
         string name
-        int created_at
         int sort_order
+        int created_at
         bool is_active
     }
 
@@ -25,8 +25,8 @@ erDiagram
         int id PK
         string name
         string descr
-        bool is_active
         int created_at
+        bool is_active
     }
 
     EnvironmentHistory {
@@ -48,6 +48,7 @@ erDiagram
         float target_temperature
         float target_humidity
         int created_at
+        bool is_active
     }
 
     Plant {
@@ -56,9 +57,9 @@ erDiagram
         string name
         string can_id
         int environment_id FK
-        int created_at
-        int sort_order
         bool auto_watering
+        int sort_order
+        int created_at
         bool is_active
     }
 
@@ -67,6 +68,7 @@ erDiagram
         int plant_id FK
         float soil_moisture
         float soil_temperature
+        int datetime
     }
 
     PlantObservation {
@@ -78,12 +80,14 @@ erDiagram
         int created_at
     }
 
-    PhotoLink {
+    CameraLink {
         int id PK
         int plant_id FK
         int environment_id FK
         string photo_url
+        string video_url
         string descr
+        int sort_order
         int created_at
         bool is_active
     }
@@ -91,16 +95,38 @@ erDiagram
 
 ## Table Descriptions
 
+### Base Fields
+All tables with `created_at` and `is_active` inherit from `BaseTable`:
+- **created_at**: Timestamp when the record was created
+- **is_active**: Boolean flag for soft deletion/deactivation
+
 ### Environment Models
 
 - **Environment**: Represents the physical growing space (room, tent, etc.)
-- **EnvironmentProfile**: Reusable configuration templates for environment settings
+  - Inherits: `created_at`, `is_active`
+  
+- **EnvironmentProfile**: Reusable configuration templates for environment settings (e.g., "Seedling", "Growth Stage")
+  - Inherits: `created_at`, `is_active`
+  
 - **EnvironmentHistory**: Time-series records of actual environmental conditions
+  - No inheritance - uses `datetime` field for timestamps
+  
 - **EnvironmentTarget**: Scheduled target conditions linked to profiles
+  - Inherits: `created_at`, `is_active`
 
 ### Plant Models
 
 - **Plant**: Individual plant monitoring nodes with sensors
+  - Inherits: `created_at`, `is_active`
+  
 - **PlantHistory**: Time-series sensor data for soil conditions
+  - No inheritance - uses `datetime` field for timestamps
+  
 - **PlantObservation**: Manual observations and subjective assessments
-- **PhotoLink**: IP camera references for environments or specific plants
+  - Uses `created_at` but doesn't inherit from BaseTable
+
+### Miscellaneous
+
+- **CameraLink**: IP camera references for environments or specific plants
+  - Inherits: `created_at`, `is_active`
+  - Supports both photo and video URLs
