@@ -79,8 +79,9 @@ class PlantHistory(SQLModel, table=True):
     """
 
     id: int | None = Field(default=None, primary_key=True)
-    plant_id: int | None = Field(default=None, foreign_key="plant.id")
+    plant_id: int = Field(foreign_key="plant.id")
     soil_moisture: float
+    soil_temperature: float
 
 class PlantObservation(SQLModel, table=True):
     """
@@ -88,9 +89,21 @@ class PlantObservation(SQLModel, table=True):
     """
 
     id: int | None = Field(default=None, primary_key=True)
-    plant_id: int | None = Field(default=None, foreign_key="plant.id")
+    plant_id: int = Field(foreign_key="plant.id")
     height_cm: float | None
     subjective_notes: str
     subjective_score: int
     created_at: int = Field(default=int(time.time()))
 
+class PhotoLink(SQLModel, table=True):
+    """
+    Represents an IP camera located in an Environment or pointed at a specific Plant
+    """
+
+    id: int | None = Field(default=None, primary_key=True)
+    plant_id: int | None = Field(default=None, foreign_key="plant.id")
+    environment_id: int | None = Field(default=None, foreign_key="environment.id")
+    photo_url: str
+    descr: str
+    created_at: int = Field(default=int(time.time()))
+    is_active: bool = Field(default=True)
