@@ -56,3 +56,8 @@ Each Plant in the Environment will be monitored and watered. Like the Environmen
 | CAN_RX0_BF    | CAN           | GPIO23   |              |                         |
 | SDA0          | I2C           | GPIO24   | D24          | Soil sensor white wire  |
 | SCL0          | I2C           | GPIO25   | D25          | Soil sensor green wire  |
+
+## AI Usage
+
+- AI generated documentation is located in the [doc/ai_generated](doc/ai_generated) folder
+- Additional use of AI will be listed here
