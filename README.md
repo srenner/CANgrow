@@ -1,6 +1,6 @@
 # CANgrow
 
-Modular, automated gardening using a CAN Bus communication network.
+Modular, automated indoor gardening using a CAN Bus communication network.
 
 ## Farm
 
