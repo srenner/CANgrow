@@ -30,6 +30,7 @@ class EnvironmentProfile(BaseTable, table=True):
         - "Growth Stage": Lights are on 18h per day.
     """
 
+    id: int | None = Field(default=None, primary_key=True)
     name: str
     descr: str | None
 
