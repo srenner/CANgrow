@@ -60,4 +60,5 @@ Each Plant in the Environment will be monitored and watered. Like the Environmen
 ## AI Usage
 
 - AI generated documentation is located in the [doc/ai_generated](doc/ai_generated) folder
+- AI generated 3D print designs located in the [3dprint/ai_generated](3dprint/ai_generated/) folder
 - Additional use of AI will be listed here
