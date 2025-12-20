@@ -100,7 +100,7 @@ class PlantObservation(SQLModel, table=True):
     height_cm: float | None
     subjective_notes: str
     subjective_score: int | None
-    created_at: int = Field(default=int(time.time()))
+    created_at: int = Field(default_factory=lambda: int(time.time()))
 
 ### MISC ######################################################################
 
