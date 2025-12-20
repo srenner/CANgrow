@@ -5,7 +5,7 @@ $fn = 60;
 wall = 2.0;           
 gap = 0.5;            // Tolerance for the Pi PCB
 lid_gap = 0.2;        // Tolerance for the lid fit
-pcb_l = 85.0; pcb_w = 56.0;
+pcb_l = 88.0; pcb_w = 56.0;
 hole_x = 58.0; hole_y = 49.0; edge_off = 3.5;
 
 // Vertical Stack
@@ -50,6 +50,10 @@ module side_cutouts() {
     
     // SD Card
     translate([bx - wall, by + 28, wall + 1.5]) cube([wall*3, 12, 3], center=true);
+    
+    // Power Button (short side, near SD card)
+    translate([bx - wall, by + 22, wall + 5]) 
+        cube([wall*3, 4, 3], center=true);
 }
 
 module main_body() {
