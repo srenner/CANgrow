@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, Field
+from sqlalchemy import Column
 import time
 
 class BaseTable(SQLModel, table=False):
@@ -7,6 +8,10 @@ class BaseTable(SQLModel, table=False):
     """
 
     created_at: int = Field(default_factory=lambda: int(time.time()))
+    updated_at: int = Field(
+        default_factory=lambda: int(time.time()),
+        sa_column_kwargs={"onupdate": lambda: int(time.time())}
+    )
     is_active: bool = Field(default=True)
 
 ### ENVIRONMENT MODELS ########################################################
