@@ -2,48 +2,28 @@
 
 Modular, automated indoor gardening using a CAN Bus communication network.
 
-## Farm
+CANgrow consists of three main parts: A Farm, Environments, and Plants.
 
-The Farm is the main application server, hosted by a Raspberri Pi with a MCP2515 based CAN Bus board, such as the PiCAN2 or PiCAN3.
+The Farm is the brain of the system. It runs on a Raspberry Pi with a PiCAN hat and collects data, runs schedules, and hosts a website.
+
+The Environment is the room or tent your plants grow in. You can have more than one. It runs on a RP2040 microcontroller with a MCP2515 CAN controller and monitors temperature, humdity, and air quality. It can control relays to activate lights, heaters, and more.
+
+And a Plant is a plant. It runs on the same RP2040 microcontroller with MCP2515 CAN controller, and monitors soil moisture, and temperature. It can activate relays that control water flow, and measure the water usage.
+
+All of these nodes are daisy-chained on a low voltage, reliable wired CAN bus network.
+
+## Partial hardwire list
 
 - Rasperri Pi - [Raspberry Pi 5 - 2 GB RAM](https://www.adafruit.com/product/6007)
 - CAN Bus board - [PiCAN3 CAN Bus Board for Raspberry Pi 4 with 3A SMPS And RTC](https://copperhilltech.com/pican3-can-bus-board-for-raspberry-pi-4-with-3a-smps-and-rtc/)
 
-For development, start the server with `fastapi dev src/farm/api/main.py`
-
-## Environment
-
-The Farm can have 1 or more Environments. Each Environment has its own temperature, humidity, and light schedule. If you have multiple rooms or multiple tents, each one is a separate Environment. Each Environment runs on a Raspberry Pi RP2040 microcontroller with a MCP25625 CAN Controller chip.
-
 - Microcontroller - [Adafruit RP2040 CAN Bus Feather with MCP2515 CAN Controller - STEMMA QT](https://www.adafruit.com/product/5724)
 - Environment sensor - [Adafruit BME688 - Temperature, Humidity, Pressure and Gas Sensor - STEMMA QT](https://www.adafruit.com/product/5046)
-
-### Power
-
-- Microcontroller can be powered from USB-C port
-- Environment sensor takes 3-5VDC from the microcontroller
-
-### Pinout
-
-TBD
-
-## Plant
-
-Each Plant in the Environment will be monitored and watered. Like the Environment nodes, a Plant is powered by a Raspberry Pi RP2040 microcontroller with a MCP25625 CAN Controller chip.
-
-- Microcontroller - [Adafruit RP2040 CAN Bus Feather with MCP2515 CAN Controller - STEMMA QT](https://www.adafruit.com/product/5724)
 - Soil sensor - [Adafruit STEMMA Soil Sensor - I2C Capacitive Moisture Sensor - JST PH 2mm](https://www.adafruit.com/product/4026)
 - Water valve - [Brass Liquid Solenoid Valve - 12V - 1/2 Inch G / BSP Thread](https://www.adafruit.com/product/996)
 - Water flow sensor - [Liquid Flow Meter - Plastic 1/2" NPS Threaded](https://www.adafruit.com/product/828)
 
-### Power
-
-- Microcontroller can be powered from USB-C port
-- Soil sensor takes 3-5VDC from the microcontroller
-- Water valve requires 12VDC
-- Water flow sensor requires 5-18VDC
-
-### Pinout
+## Raspberry Pi / PiCAN Pinout
 
 | Function      | Communication | GPIO Pin | Pin on board | Hookup                  |
 | ------------- | ------------- | -------- | ------------ | ----------------------- |
