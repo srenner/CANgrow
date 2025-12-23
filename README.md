@@ -12,7 +12,7 @@ And a Plant is a plant. It runs on the same RP2040 microcontroller with MCP2515 
 
 All of these nodes are daisy-chained on a low voltage, reliable wired CAN bus network.
 
-## Partial hardwire list
+## Partial hardware list
 
 - Rasperri Pi - [Raspberry Pi 5 - 2 GB RAM](https://www.adafruit.com/product/6007)
 - CAN Bus board - [PiCAN3 CAN Bus Board for Raspberry Pi 4 with 3A SMPS And RTC](https://copperhilltech.com/pican3-can-bus-board-for-raspberry-pi-4-with-3a-smps-and-rtc/)
