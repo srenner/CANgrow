@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+/* Light theme (default) */
+:root {
+    --color-bg: #ffffff;
+    --color-text: #111827;
+    --btn-bg: #e5e7eb;      /* gray-200 */
+    --btn-text: #111827;
+
+}
+
+.dark {
+    --color-bg: #111827;
+    --color-text: #f9fafb;
+    --btn-bg: #374151;      /* gray-700 */
+    --btn-text: #f9fafb;
+
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
