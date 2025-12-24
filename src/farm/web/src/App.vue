@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
+import Header from './components/Header.vue';
 
   const dark = ref<boolean>(false);
 
@@ -29,11 +30,8 @@
 </script>
 
 <template>
-  <div>
-    <button @click="toggleTheme" class="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 transition">
-      Switch to {{ dark ? 'Light' : 'Dark' }} Mode
-    </button>
-  </div>
+  <Header></Header>
+  
 </template>
 
 <style scoped></style>
