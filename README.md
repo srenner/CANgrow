@@ -37,6 +37,26 @@ All of these nodes are daisy-chained on a low voltage, reliable wired CAN bus ne
 | SDA0          | I2C           | GPIO24   | D24          | Soil sensor white wire  |
 | SCL0          | I2C           | GPIO25   | D25          | Soil sensor green wire  |
 
+## Software Stack
+
+### Farm Node
+
+- API - FastAPI
+- Database - SQLite
+- Web framework - Vue.js
+  - CSS - Tailwindcss
+  - UI Components - Reka UI
+
+### Environment Nodes
+
+- CircuitPython
+- TBD
+
+### Plant Notes
+
+- CircuitPython
+- TBD
+
 ## AI Usage
 
 - AI generated documentation is located in the [doc/ai_generated](doc/ai_generated) folder
