@@ -46,10 +46,6 @@ module side_cutouts() {
     
     // SD Card
     translate([bx - wall, by + 28, wall + 1.5]) cube([wall*3, 12, 3], center=true);
-    
-    // Power Button (short side, near SD card)
-    translate([bx - wall, by + 22, wall + 5]) 
-        cube([wall*3, 4, 3], center=true);
 }
 module main_body() {
     difference() {
