@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
-import Header from './components/Header.vue';
+  import Header from './components/Header.vue';
 
   const dark = ref<boolean>(false);
 
@@ -30,8 +30,8 @@ import Header from './components/Header.vue';
 </script>
 
 <template>
-  <Header></Header>
-  
+  <Header />
+  <RouterView />
 </template>
 
 <style scoped></style>

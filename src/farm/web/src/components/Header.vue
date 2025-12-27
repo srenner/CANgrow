@@ -2,6 +2,9 @@
     import { ref, onMounted } from 'vue'
     import { ArrowPathIcon, MoonIcon, SunIcon } from '@heroicons/vue/24/solid'
     import { createClient } from '@/api/client';
+    import type { Environment } from '@/api/types.gen';
+    import { Environment as EnvironmentService } from '@/api/sdk.gen';
+
 
     const dark = ref<boolean>(false);
 
@@ -19,27 +22,7 @@
             dark.value = window.matchMedia('(prefers-color-scheme: dark)').matches;
         }
         applyTheme(dark.value);
-
-
-
     });
-
-    const api = createClient();
-    const environments = ref([]);
-    const loading = ref(false);
-    const error = ref<string | null>(null);
-
-    async function loadEnvironments() {
-        loading.value = true;
-        error.value = null;
-        try {
-            //const response = con
-
-        }
-        catch {
-
-        }
-    }
 
     function toggleTheme(): void {
         dark.value = !dark.value;
@@ -51,6 +34,7 @@
 
 <template>
     <header>
+        CANgrow
         <button @click="toggleTheme">
             <span v-if="dark">
                 <SunIcon class="size-6"></SunIcon>
@@ -59,15 +43,7 @@
                 <MoonIcon class="size-6"></MoonIcon>
             </span>
         </button>
-        <div>
-            <div v-if="loading">Loading...</div>
-            <div v-else-if="error">{{ error }} }}</div>
-            <ul v-else>
-                <li v-for="env in environments" :key="env.id">
-                    {{ env.name }}
-                </li>
-            </ul>
-        </div>
+        
     </header>
 </template>
 
