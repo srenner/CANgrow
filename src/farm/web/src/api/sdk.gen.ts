@@ -18,19 +18,30 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
     meta?: Record<string, unknown>;
 };
 
-/**
- * Read Environments
- */
-export const listEnvironments = <ThrowOnError extends boolean = false>(options?: Options<ListEnvironmentsData, ThrowOnError>) => (options?.client ?? client).get<ListEnvironmentsResponses, unknown, ThrowOnError>({ url: '/environment', ...options });
-
-/**
- * Create Environment
- */
-export const createEnvironment = <ThrowOnError extends boolean = false>(options: Options<CreateEnvironmentData, ThrowOnError>) => (options.client ?? client).post<CreateEnvironmentResponses, CreateEnvironmentErrors, ThrowOnError>({
-    url: '/environment',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
+export class Environment {
+    /**
+     * Read Environments
+     */
+    public static listEnvironments<ThrowOnError extends boolean = false>(options?: Options<ListEnvironmentsData, ThrowOnError>) {
+        return (options?.client ?? client).get<ListEnvironmentsResponses, unknown, ThrowOnError>({
+            responseType: 'json',
+            url: '/environment',
+            ...options
+        });
     }
-});
+    
+    /**
+     * Create Environment
+     */
+    public static createEnvironment<ThrowOnError extends boolean = false>(options: Options<CreateEnvironmentData, ThrowOnError>) {
+        return (options.client ?? client).post<CreateEnvironmentResponses, CreateEnvironmentErrors, ThrowOnError>({
+            responseType: 'json',
+            url: '/environment',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+}

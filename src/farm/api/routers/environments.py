@@ -16,7 +16,7 @@ router = APIRouter(
 @router.get("", response_model=List[Environment], operation_id="listEnvironments")
 def read_environments():
     with Session(engine) as session:
-        environments = session.exec(select(Environment)).all()
+        environments = session.exec(select(Environment)).scalars().all()
         return environments
     
 @router.post("", response_model=Environment, operation_id="createEnvironment")

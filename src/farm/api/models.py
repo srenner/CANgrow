@@ -25,6 +25,7 @@ class Environment(BaseTable, table=True):
     can_id: str = Field(index=True)
     name: str
     sort_order: int = Field(default=0)
+    model_config = {"from_attributes": True}
 
 class EnvironmentProfile(BaseTable, table=True):
     """

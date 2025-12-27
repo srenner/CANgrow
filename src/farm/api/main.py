@@ -6,10 +6,12 @@ import time
 from models import Environment, EnvironmentProfile
 from models import Plant
 from routers.environments import router as environments_router
+from config import Settings
+from fastapi.middleware.cors import CORSMiddleware
 
 
-connect_args = {"check_same_thread": False}
-engine = create_engine("sqlite:///src/farm/database/cangrow.db", echo=True, connect_args=connect_args)
+settings = Settings()
+engine = create_engine(settings.DATABASE_URL, echo=True, connect_args=settings.CONNECT_ARGS)
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
@@ -20,9 +22,21 @@ async def lifespan(app: FastAPI):
     yield
     print("Shutdown at " )
 
-router = APIRouter()
 app = FastAPI(lifespan=lifespan)
 app.include_router(environments_router)
+
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 # ### ENVIRONMENT ENDPOINTS #####################################################
 
