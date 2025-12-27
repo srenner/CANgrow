@@ -41,42 +41,6 @@ export type Environment = {
 };
 
 /**
- * EnvironmentProfile
- *
- * Represents a grouping of EnvironmentTarget settings.
- *
- * Examples:
- * - "Seedling": Lights are on continuously.
- * - "Growth Stage": Lights are on 18h per day.
- */
-export type EnvironmentProfile = {
-    /**
-     * Created At
-     */
-    created_at?: number;
-    /**
-     * Updated At
-     */
-    updated_at?: number;
-    /**
-     * Is Active
-     */
-    is_active?: boolean;
-    /**
-     * Id
-     */
-    id?: number | null;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Descr
-     */
-    descr: string | null;
-};
-
-/**
  * HTTPValidationError
  */
 export type HttpValidationError = {
@@ -84,54 +48,6 @@ export type HttpValidationError = {
      * Detail
      */
     detail?: Array<ValidationError>;
-};
-
-/**
- * Plant
- *
- * A Plant node that monitors a single real world plant.
- */
-export type Plant = {
-    /**
-     * Created At
-     */
-    created_at?: number;
-    /**
-     * Updated At
-     */
-    updated_at?: number;
-    /**
-     * Is Active
-     */
-    is_active?: boolean;
-    /**
-     * Id
-     */
-    id?: number | null;
-    /**
-     * Species
-     */
-    species: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Can Id
-     */
-    can_id: string;
-    /**
-     * Environment Id
-     */
-    environment_id?: number | null;
-    /**
-     * Auto Watering
-     */
-    auto_watering: boolean;
-    /**
-     * Sort Order
-     */
-    sort_order?: number;
 };
 
 /**
@@ -152,113 +68,45 @@ export type ValidationError = {
     type: string;
 };
 
-export type ReadEnvironmentsEnvironmentGetData = {
+export type ListEnvironmentsData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/environment';
 };
 
-export type ReadEnvironmentsEnvironmentGetResponses = {
+export type ListEnvironmentsResponses = {
     /**
+     * Response Listenvironments
+     *
      * Successful Response
      */
-    200: unknown;
+    200: Array<Environment>;
 };
 
-export type CreateEnvironmentEnvironmentPostData = {
+export type ListEnvironmentsResponse = ListEnvironmentsResponses[keyof ListEnvironmentsResponses];
+
+export type CreateEnvironmentData = {
     body: Environment;
     path?: never;
     query?: never;
     url: '/environment';
 };
 
-export type CreateEnvironmentEnvironmentPostErrors = {
+export type CreateEnvironmentErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type CreateEnvironmentEnvironmentPostError = CreateEnvironmentEnvironmentPostErrors[keyof CreateEnvironmentEnvironmentPostErrors];
+export type CreateEnvironmentError = CreateEnvironmentErrors[keyof CreateEnvironmentErrors];
 
-export type CreateEnvironmentEnvironmentPostResponses = {
+export type CreateEnvironmentResponses = {
     /**
      * Successful Response
      */
-    200: unknown;
+    200: Environment;
 };
 
-export type ReadEnvironmentProfilesEnvironmentProfileGetData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/environment/profile';
-};
-
-export type ReadEnvironmentProfilesEnvironmentProfileGetResponses = {
-    /**
-     * Successful Response
-     */
-    200: unknown;
-};
-
-export type CreateEnvironmentProfileEnvironmentProfilePostData = {
-    body: EnvironmentProfile;
-    path?: never;
-    query?: never;
-    url: '/environment/profile';
-};
-
-export type CreateEnvironmentProfileEnvironmentProfilePostErrors = {
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type CreateEnvironmentProfileEnvironmentProfilePostError = CreateEnvironmentProfileEnvironmentProfilePostErrors[keyof CreateEnvironmentProfileEnvironmentProfilePostErrors];
-
-export type CreateEnvironmentProfileEnvironmentProfilePostResponses = {
-    /**
-     * Successful Response
-     */
-    200: unknown;
-};
-
-export type ReadPlantsPlantGetData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/plant';
-};
-
-export type ReadPlantsPlantGetResponses = {
-    /**
-     * Successful Response
-     */
-    200: unknown;
-};
-
-export type CreatePlantPlantPostData = {
-    body: Plant;
-    path?: never;
-    query?: never;
-    url: '/plant';
-};
-
-export type CreatePlantPlantPostErrors = {
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type CreatePlantPlantPostError = CreatePlantPlantPostErrors[keyof CreatePlantPlantPostErrors];
-
-export type CreatePlantPlantPostResponses = {
-    /**
-     * Successful Response
-     */
-    200: unknown;
-};
+export type CreateEnvironmentResponse = CreateEnvironmentResponses[keyof CreateEnvironmentResponses];

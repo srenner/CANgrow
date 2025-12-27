@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateEnvironmentEnvironmentPostData, CreateEnvironmentEnvironmentPostErrors, CreateEnvironmentEnvironmentPostResponses, CreateEnvironmentProfileEnvironmentProfilePostData, CreateEnvironmentProfileEnvironmentProfilePostErrors, CreateEnvironmentProfileEnvironmentProfilePostResponses, CreatePlantPlantPostData, CreatePlantPlantPostErrors, CreatePlantPlantPostResponses, ReadEnvironmentProfilesEnvironmentProfileGetData, ReadEnvironmentProfilesEnvironmentProfileGetResponses, ReadEnvironmentsEnvironmentGetData, ReadEnvironmentsEnvironmentGetResponses, ReadPlantsPlantGetData, ReadPlantsPlantGetResponses } from './types.gen';
+import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentResponses, ListEnvironmentsData, ListEnvironmentsResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -21,47 +21,13 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 /**
  * Read Environments
  */
-export const readEnvironmentsEnvironmentGet = <ThrowOnError extends boolean = false>(options?: Options<ReadEnvironmentsEnvironmentGetData, ThrowOnError>) => (options?.client ?? client).get<ReadEnvironmentsEnvironmentGetResponses, unknown, ThrowOnError>({ url: '/environment', ...options });
+export const listEnvironments = <ThrowOnError extends boolean = false>(options?: Options<ListEnvironmentsData, ThrowOnError>) => (options?.client ?? client).get<ListEnvironmentsResponses, unknown, ThrowOnError>({ url: '/environment', ...options });
 
 /**
  * Create Environment
  */
-export const createEnvironmentEnvironmentPost = <ThrowOnError extends boolean = false>(options: Options<CreateEnvironmentEnvironmentPostData, ThrowOnError>) => (options.client ?? client).post<CreateEnvironmentEnvironmentPostResponses, CreateEnvironmentEnvironmentPostErrors, ThrowOnError>({
+export const createEnvironment = <ThrowOnError extends boolean = false>(options: Options<CreateEnvironmentData, ThrowOnError>) => (options.client ?? client).post<CreateEnvironmentResponses, CreateEnvironmentErrors, ThrowOnError>({
     url: '/environment',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Read Environment Profiles
- */
-export const readEnvironmentProfilesEnvironmentProfileGet = <ThrowOnError extends boolean = false>(options?: Options<ReadEnvironmentProfilesEnvironmentProfileGetData, ThrowOnError>) => (options?.client ?? client).get<ReadEnvironmentProfilesEnvironmentProfileGetResponses, unknown, ThrowOnError>({ url: '/environment/profile', ...options });
-
-/**
- * Create Environment Profile
- */
-export const createEnvironmentProfileEnvironmentProfilePost = <ThrowOnError extends boolean = false>(options: Options<CreateEnvironmentProfileEnvironmentProfilePostData, ThrowOnError>) => (options.client ?? client).post<CreateEnvironmentProfileEnvironmentProfilePostResponses, CreateEnvironmentProfileEnvironmentProfilePostErrors, ThrowOnError>({
-    url: '/environment/profile',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Read Plants
- */
-export const readPlantsPlantGet = <ThrowOnError extends boolean = false>(options?: Options<ReadPlantsPlantGetData, ThrowOnError>) => (options?.client ?? client).get<ReadPlantsPlantGetResponses, unknown, ThrowOnError>({ url: '/plant', ...options });
-
-/**
- * Create Plant
- */
-export const createPlantPlantPost = <ThrowOnError extends boolean = false>(options: Options<CreatePlantPlantPostData, ThrowOnError>) => (options.client ?? client).post<CreatePlantPlantPostResponses, CreatePlantPlantPostErrors, ThrowOnError>({
-    url: '/plant',
     ...options,
     headers: {
         'Content-Type': 'application/json',
