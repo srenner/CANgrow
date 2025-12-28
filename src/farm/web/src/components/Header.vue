@@ -1,10 +1,6 @@
 <script setup lang="ts">
     import { ref, onMounted } from 'vue'
-    import { ArrowPathIcon, MoonIcon, SunIcon } from '@heroicons/vue/24/solid'
-    import { createClient } from '@/api/client';
-    import type { Environment } from '@/api/types.gen';
-    import { Environment as EnvironmentService } from '@/api/sdk.gen';
-
+    import { MoonIcon, SunIcon } from '@heroicons/vue/24/solid'
 
     const dark = ref<boolean>(false);
 
