@@ -1,9 +1,8 @@
 <script setup lang="ts">
     import { ref, onMounted } from 'vue'
-    import { ArrowPathIcon, MoonIcon, SunIcon } from '@heroicons/vue/24/solid'
-    import { createClient } from '@/api/client';
     import type { Environment } from '@/api/types.gen';
     import { Environment as EnvironmentService } from '@/api/sdk.gen';
+    import EnvironmentCard from '@/components/EnvironmentCard.vue';
 
     const environments = ref<Environment[]>([]);
     const loading = ref(false);
@@ -36,14 +35,16 @@
 </script>
 
 <template>
+    <h1>Environments</h1>
     <div>
+        
         <div v-if="loading">Loading...</div>
         <div v-else-if="error">{{ error }}</div>
-        <ul v-else>
-            <li v-for="env in environments" :key="env.id!">
-                {{ env }}
-            </li>
-        </ul>
+        <div v-else class="grid grid-cols-4 gap-4">
+            <div v-for="env in environments" :key="env.id!" class="bg-blue-500 p-3">
+                <EnvironmentCard :env="env"/>
+            </div>
+        </div>
     </div>
 </template>
 
