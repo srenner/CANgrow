@@ -51,6 +51,54 @@ export type HttpValidationError = {
 };
 
 /**
+ * Plant
+ *
+ * A Plant node that monitors a single real world plant.
+ */
+export type Plant = {
+    /**
+     * Created At
+     */
+    created_at?: number;
+    /**
+     * Updated At
+     */
+    updated_at?: number;
+    /**
+     * Is Active
+     */
+    is_active?: boolean;
+    /**
+     * Id
+     */
+    id?: number | null;
+    /**
+     * Species
+     */
+    species: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Can Id
+     */
+    can_id: string;
+    /**
+     * Environment Id
+     */
+    environment_id?: number | null;
+    /**
+     * Auto Watering
+     */
+    auto_watering: boolean;
+    /**
+     * Sort Order
+     */
+    sort_order?: number;
+};
+
+/**
  * ValidationError
  */
 export type ValidationError = {
@@ -110,3 +158,46 @@ export type CreateEnvironmentResponses = {
 };
 
 export type CreateEnvironmentResponse = CreateEnvironmentResponses[keyof CreateEnvironmentResponses];
+
+export type ListPlantsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/plant';
+};
+
+export type ListPlantsResponses = {
+    /**
+     * Response Listplants
+     *
+     * Successful Response
+     */
+    200: Array<Plant>;
+};
+
+export type ListPlantsResponse = ListPlantsResponses[keyof ListPlantsResponses];
+
+export type CreatePlantData = {
+    body: Plant;
+    path?: never;
+    query?: never;
+    url: '/plant';
+};
+
+export type CreatePlantErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CreatePlantError = CreatePlantErrors[keyof CreatePlantErrors];
+
+export type CreatePlantResponses = {
+    /**
+     * Successful Response
+     */
+    200: Plant;
+};
+
+export type CreatePlantResponse = CreatePlantResponses[keyof CreatePlantResponses];

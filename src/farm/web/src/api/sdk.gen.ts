@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentResponses, ListEnvironmentsData, ListEnvironmentsResponses } from './types.gen';
+import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentResponses, CreatePlantData, CreatePlantErrors, CreatePlantResponses, ListEnvironmentsData, ListEnvironmentsResponses, ListPlantsData, ListPlantsResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -37,6 +37,34 @@ export class Environment {
         return (options.client ?? client).post<CreateEnvironmentResponses, CreateEnvironmentErrors, ThrowOnError>({
             responseType: 'json',
             url: '/environment',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+}
+
+export class Plant {
+    /**
+     * Read Plants
+     */
+    public static listPlants<ThrowOnError extends boolean = false>(options?: Options<ListPlantsData, ThrowOnError>) {
+        return (options?.client ?? client).get<ListPlantsResponses, unknown, ThrowOnError>({
+            responseType: 'json',
+            url: '/plant',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Plant
+     */
+    public static createPlant<ThrowOnError extends boolean = false>(options: Options<CreatePlantData, ThrowOnError>) {
+        return (options.client ?? client).post<CreatePlantResponses, CreatePlantErrors, ThrowOnError>({
+            responseType: 'json',
+            url: '/plant',
             ...options,
             headers: {
                 'Content-Type': 'application/json',
