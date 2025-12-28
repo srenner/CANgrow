@@ -6,6 +6,7 @@ import time
 from models import Environment, EnvironmentProfile
 from models import Plant
 from routers.environments import router as environments_router
+from routers.plants import router as plants_router
 from config import Settings
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -24,6 +25,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(environments_router)
+app.include_router(plants_router)
 
 origins = [
     "http://localhost:5173",
