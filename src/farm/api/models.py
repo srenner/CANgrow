@@ -102,6 +102,30 @@ class Plant(BaseTable, table=True):
     auto_watering: bool
     sort_order: int = Field(default=0)
 
+class PlantCreate(SQLModel):
+    """Schema for POST requests"""
+
+    species: str
+    name: str
+    can_id: str
+    environment_id: int
+    auto_watering: bool
+    sort_order: int
+
+class PlantPublic(SQLModel):
+    """Schema for GET response"""
+
+    id: int
+    created_at: int
+    updated_at: int
+    is_active: bool
+    species: str
+    name: str
+    can_id: str
+    environment_id: int
+    auto_watering: bool
+    sort_order: int
+
 class PlantHistory(SQLModel, table=True):
     """
     Represents a status of a Plant at the specified [datetime].

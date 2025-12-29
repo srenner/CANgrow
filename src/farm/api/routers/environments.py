@@ -13,7 +13,7 @@ router = APIRouter(
     tags=["environment"]
 )
 
-@router.get("", response_model=List[Environment], operation_id="listEnvironments")
+@router.get("", response_model=List[EnvironmentPublic], operation_id="listEnvironments")
 def read_environments():
     with Session(engine) as session:
         environments = session.exec(select(Environment)
