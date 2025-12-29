@@ -1,5 +1,4 @@
 from sqlmodel import SQLModel, Field
-from sqlalchemy import Column
 import time
 
 class BaseTable(SQLModel, table=False):
@@ -26,6 +25,24 @@ class Environment(BaseTable, table=True):
     name: str
     sort_order: int = Field(default=0)
     model_config = {"from_attributes": True}
+
+class EnvironmentCreate(SQLModel):
+    """Schema for POST requests"""
+    
+    can_id: str = Field(index=True)
+    name: str
+    sort_order: int = Field(default=0)
+
+class EnvironmentPublic(SQLModel):
+    """Schema for GET response"""
+
+    id: int
+    created_at: int
+    updated_at: int
+    is_active: bool
+    can_id: str
+    name: str
+    sort_order: int
 
 class EnvironmentProfile(BaseTable, table=True):
     """

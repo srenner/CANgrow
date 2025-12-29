@@ -2,7 +2,7 @@ from typing import List
 from fastapi import APIRouter
 from sqlalchemy import select
 from sqlmodel import Session, create_engine
-from models import Environment
+from models import Environment, EnvironmentCreate, EnvironmentPublic
 from config import Settings
 
 settings = Settings()
@@ -20,10 +20,11 @@ def read_environments():
                                     .where(Environment.is_active == True)).scalars().all()
         return environments
     
-@router.post("", response_model=Environment, operation_id="createEnvironment")
-def create_environment(environment: Environment):
+@router.post("", response_model=EnvironmentPublic, operation_id="createEnvironment")
+def create_environment(environment: EnvironmentCreate):
     with Session(engine) as session:
-        session.add(environment)
+        db_environment = Environment.model_validate(environment)
+        session.add(db_environment)
         session.commit()
-        session.refresh(environment)
-        return environment
+        session.refresh(db_environment)
+        return db_environment
