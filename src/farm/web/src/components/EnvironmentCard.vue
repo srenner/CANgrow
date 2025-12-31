@@ -3,9 +3,15 @@
 </script>
 
 <template>
-    <div>
+    <div class="env-card">
         {{env.name}}
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+    .env-card {
+        border: solid 1px black;
+
+    }
+
+</style>
