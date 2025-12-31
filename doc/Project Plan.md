@@ -83,3 +83,11 @@ function calculateFlowRate()
     // flow rate calculated with pulses per length of time, possibly 1s
 }
 ```
+
+Data strategy
+
+Environment sends msgs: temp, humid, gas, light status, heat status
+only send to db if any value changed
+save key frame record at least every 60s
+
+finalize naming conventions

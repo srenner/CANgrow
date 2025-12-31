@@ -5,8 +5,8 @@ from contextlib import asynccontextmanager
 import time
 from models import Environment, EnvironmentProfile
 from models import Plant
-from routers.environments import router as environments_router
-from routers.plants import router as plants_router
+from routers.environment_router import router as environment_router
+from routers.plant_router import router as plant_router
 from config import Settings
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -24,8 +24,8 @@ async def lifespan(app: FastAPI):
     print("Shutdown at " )
 
 app = FastAPI(lifespan=lifespan)
-app.include_router(environments_router)
-app.include_router(plants_router)
+app.include_router(environment_router)
+app.include_router(plant_router)
 
 origins = [
     "http://localhost:5173",
