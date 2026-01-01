@@ -41,11 +41,11 @@ All of these nodes are daisy-chained on a low voltage, reliable wired CAN bus ne
 
 ### Farm Node
 
-- API - FastAPI
-- Database - SQLite
-- Web framework - Vue.js
-  - CSS - Tailwindcss
-  - UI Components - Reka UI
+- API: FastAPI
+- Database: SQLite
+- Web framework: Vue.js
+  - CSS: Tailwindcss
+  - UI Components: Reka UI
 
 ### Environment Nodes
 
@@ -59,7 +59,8 @@ All of these nodes are daisy-chained on a low voltage, reliable wired CAN bus ne
 
 ## AI Usage
 
-- Claude Sonnet 4.5 was used to generate documentation in the [doc/ai_generated](doc/ai_generated) folder
-- Claude Sonnet 4.5 was used to generate 3D print designs in the [3dprint/ai_generated](3dprint/ai_generated/) folder
-- Claude Sonnet 4.5 was used to design the card component for the Vuejs app
+- Claude Sonnet 4.5
+  - Documentation in the [doc/ai_generated](doc/ai_generated) folder
+  - 3D print designs in the [3dprint/ai_generated](3dprint/ai_generated/) folder
+  - "Card" component css for the Vuejs app
 - Additional use of AI will be listed here
