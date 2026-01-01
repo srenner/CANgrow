@@ -84,10 +84,9 @@ function calculateFlowRate()
 }
 ```
 
-Data strategy
+Data architecture
 
-Environment sends msgs: temp, humid, gas, light status, heat status
-only send to db if any value changed
-save key frame record at least every 60s
-
-finalize naming conventions
+Service receives firehose CAN data
+Every 1s POST to FastAPI
+FastAPI websocket to vue app
+Service writes to db every 60s
