@@ -1,8 +1,8 @@
 from typing import List
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from sqlalchemy import select
 from sqlmodel import Session, create_engine
-from models import Environment, EnvironmentCreate, EnvironmentPublic
+from models import Environment, EnvironmentCreate, EnvironmentPatch, EnvironmentPublic
 from config import Settings
 
 settings = Settings()
@@ -24,6 +24,20 @@ def read_environments():
 def create_environment(environment: EnvironmentCreate):
     with Session(engine) as session:
         db_environment = Environment.model_validate(environment)
+        session.add(db_environment)
+        session.commit()
+        session.refresh(db_environment)
+        return db_environment
+    
+@router.patch("/{id}", response_model=EnvironmentPublic, operation_id="updateEnvironment")
+def update_environment(id: int, environment: EnvironmentPatch):
+    with Session(engine) as session:
+        db_environment = session.exec(select(Environment).filter(Environment.id == id)).first()
+        if not db_environment:
+            raise HTTPException(status_code=404, detail="Environment Not Found")
+        update_data = environment.model_dump(exclude_unset=True)
+        for field, value in update_data.items():
+            setattr(db_environment, field, value)
         session.add(db_environment)
         session.commit()
         session.refresh(db_environment)
