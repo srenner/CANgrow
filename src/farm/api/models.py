@@ -36,10 +36,10 @@ class EnvironmentCreate(SQLModel):
 class EnvironmentPatch(SQLModel):
     """Schema for PATCH requests"""
 
-    can_id: str | None = None
-    name: str | None = None
-    sort_order: int | None = None
-    is_active: bool | None = None
+    can_id: str | None = Field(default=None)
+    name: str | None = Field(default=None)
+    sort_order: int | None = Field(default=None)
+    is_active: bool | None = Field(default=None)
 
 class EnvironmentPublic(SQLModel):
     """Schema for GET response"""

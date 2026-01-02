@@ -32,7 +32,7 @@ def create_environment(environment: EnvironmentCreate):
 @router.patch("/{id}", response_model=EnvironmentPublic, operation_id="updateEnvironment")
 def update_environment(id: int, environment: EnvironmentPatch):
     with Session(engine) as session:
-        db_environment = session.exec(select(Environment).filter(Environment.id == id)).first()
+        db_environment = session.get(Environment, id)
         if not db_environment:
             raise HTTPException(status_code=404, detail="Environment Not Found")
         update_data = environment.model_dump(exclude_unset=True)
