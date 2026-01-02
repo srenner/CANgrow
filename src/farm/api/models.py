@@ -23,6 +23,7 @@ class Environment(BaseTable, table=True):
     id: int | None = Field(default=None, primary_key=True)
     can_id: str = Field(index=True)
     name: str
+    descr: str | None
     sort_order: int = Field(default=0)
     model_config = {"from_attributes": True}
 
@@ -31,6 +32,7 @@ class EnvironmentCreate(SQLModel):
     
     can_id: str = Field(index=True)
     name: str
+    descr: str = Field(default="")
     sort_order: int = Field(default=0)
 
 class EnvironmentPatch(SQLModel):
@@ -38,6 +40,7 @@ class EnvironmentPatch(SQLModel):
 
     can_id: str | None = Field(default=None)
     name: str | None = Field(default=None)
+    descr: str = Field(default="")
     sort_order: int | None = Field(default=None)
     is_active: bool | None = Field(default=None)
 
@@ -50,6 +53,7 @@ class EnvironmentPublic(SQLModel):
     is_active: bool
     can_id: str
     name: str
+    descr: str | None = Field(default="")
     sort_order: int
 
 class EnvironmentProfile(BaseTable, table=True):
