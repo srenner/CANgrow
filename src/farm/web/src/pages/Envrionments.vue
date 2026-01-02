@@ -41,7 +41,7 @@
         <div v-if="loading">Loading...</div>
         <div v-else-if="error">{{ error }}</div>
         <div v-else class="gap-4">
-            <div v-for="env in environments" :key="env.id!">
+            <div v-for="env in environments" :key="env.id!" class="mb-4">
                 <EnvironmentCard :env="env"/>
             </div>
         </div>
