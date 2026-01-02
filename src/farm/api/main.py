@@ -1,10 +1,6 @@
-from typing import List
-from fastapi import APIRouter, FastAPI
-from sqlmodel import Field, Session, SQLModel, create_engine, select
+from fastapi import FastAPI
+from sqlmodel import SQLModel, create_engine
 from contextlib import asynccontextmanager
-import time
-from models import Environment, EnvironmentProfile
-from models import Plant
 from routers.environment_router import router as environment_router
 from routers.plant_router import router as plant_router
 from config import Settings
