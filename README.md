@@ -63,5 +63,5 @@ All of these nodes are daisy-chained on a low voltage, reliable wired CAN bus ne
   - Documentation in the [doc/ai_generated](doc/ai_generated) folder
   - 3D print designs in the [3dprint/ai_generated](3dprint/ai_generated/) folder
   - "Card" component css for the Vuejs app
-  - Placeholder svg image for Environment in Vuejs app
+  - SVG images in the Vuejs assets/ai folder
 - Additional use of AI will be listed here
