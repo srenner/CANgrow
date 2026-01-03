@@ -5,27 +5,11 @@ export type ClientOptions = {
 };
 
 /**
- * Environment
+ * EnvironmentCreate
  *
- * Represents the Environment that Plants grow in. This could be a room in a building or a tent.
+ * Schema for POST requests
  */
-export type Environment = {
-    /**
-     * Created At
-     */
-    created_at?: number;
-    /**
-     * Updated At
-     */
-    updated_at?: number;
-    /**
-     * Is Active
-     */
-    is_active?: boolean;
-    /**
-     * Id
-     */
-    id?: number | null;
+export type EnvironmentCreate = {
     /**
      * Can Id
      */
@@ -35,9 +19,81 @@ export type Environment = {
      */
     name: string;
     /**
+     * Descr
+     */
+    descr?: string;
+    /**
      * Sort Order
      */
     sort_order?: number;
+};
+
+/**
+ * EnvironmentPatch
+ *
+ * Schema for PATCH requests
+ */
+export type EnvironmentPatch = {
+    /**
+     * Can Id
+     */
+    can_id?: string | null;
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Descr
+     */
+    descr?: string;
+    /**
+     * Sort Order
+     */
+    sort_order?: number | null;
+    /**
+     * Is Active
+     */
+    is_active?: boolean | null;
+};
+
+/**
+ * EnvironmentPublic
+ *
+ * Schema for GET response
+ */
+export type EnvironmentPublic = {
+    /**
+     * Id
+     */
+    id: number;
+    /**
+     * Created At
+     */
+    created_at: number;
+    /**
+     * Updated At
+     */
+    updated_at: number;
+    /**
+     * Is Active
+     */
+    is_active: boolean;
+    /**
+     * Can Id
+     */
+    can_id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Descr
+     */
+    descr?: string | null;
+    /**
+     * Sort Order
+     */
+    sort_order: number;
 };
 
 /**
@@ -51,27 +107,11 @@ export type HttpValidationError = {
 };
 
 /**
- * Plant
+ * PlantCreate
  *
- * A Plant node that monitors a single real world plant.
+ * Schema for POST requests
  */
-export type Plant = {
-    /**
-     * Created At
-     */
-    created_at?: number;
-    /**
-     * Updated At
-     */
-    updated_at?: number;
-    /**
-     * Is Active
-     */
-    is_active?: boolean;
-    /**
-     * Id
-     */
-    id?: number | null;
+export type PlantCreate = {
     /**
      * Species
      */
@@ -87,7 +127,7 @@ export type Plant = {
     /**
      * Environment Id
      */
-    environment_id?: number | null;
+    environment_id: number;
     /**
      * Auto Watering
      */
@@ -95,7 +135,55 @@ export type Plant = {
     /**
      * Sort Order
      */
-    sort_order?: number;
+    sort_order: number;
+};
+
+/**
+ * PlantPublic
+ *
+ * Schema for GET response
+ */
+export type PlantPublic = {
+    /**
+     * Id
+     */
+    id: number;
+    /**
+     * Created At
+     */
+    created_at: number;
+    /**
+     * Updated At
+     */
+    updated_at: number;
+    /**
+     * Is Active
+     */
+    is_active: boolean;
+    /**
+     * Species
+     */
+    species: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Can Id
+     */
+    can_id: string;
+    /**
+     * Environment Id
+     */
+    environment_id: number;
+    /**
+     * Auto Watering
+     */
+    auto_watering: boolean;
+    /**
+     * Sort Order
+     */
+    sort_order: number;
 };
 
 /**
@@ -129,13 +217,13 @@ export type ListEnvironmentsResponses = {
      *
      * Successful Response
      */
-    200: Array<Environment>;
+    200: Array<EnvironmentPublic>;
 };
 
 export type ListEnvironmentsResponse = ListEnvironmentsResponses[keyof ListEnvironmentsResponses];
 
 export type CreateEnvironmentData = {
-    body: Environment;
+    body: EnvironmentCreate;
     path?: never;
     query?: never;
     url: '/environment';
@@ -154,10 +242,75 @@ export type CreateEnvironmentResponses = {
     /**
      * Successful Response
      */
-    200: Environment;
+    200: EnvironmentPublic;
 };
 
 export type CreateEnvironmentResponse = CreateEnvironmentResponses[keyof CreateEnvironmentResponses];
+
+export type GetEnvironmentData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: number;
+    };
+    query?: {
+        /**
+         * Include Inactive
+         */
+        include_inactive?: boolean;
+    };
+    url: '/environment/{id}';
+};
+
+export type GetEnvironmentErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetEnvironmentError = GetEnvironmentErrors[keyof GetEnvironmentErrors];
+
+export type GetEnvironmentResponses = {
+    /**
+     * Successful Response
+     */
+    200: EnvironmentPublic;
+};
+
+export type GetEnvironmentResponse = GetEnvironmentResponses[keyof GetEnvironmentResponses];
+
+export type UpdateEnvironmentData = {
+    body: EnvironmentPatch;
+    path: {
+        /**
+         * Id
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/environment/{id}';
+};
+
+export type UpdateEnvironmentErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type UpdateEnvironmentError = UpdateEnvironmentErrors[keyof UpdateEnvironmentErrors];
+
+export type UpdateEnvironmentResponses = {
+    /**
+     * Successful Response
+     */
+    200: EnvironmentPublic;
+};
+
+export type UpdateEnvironmentResponse = UpdateEnvironmentResponses[keyof UpdateEnvironmentResponses];
 
 export type ListPlantsData = {
     body?: never;
@@ -172,13 +325,13 @@ export type ListPlantsResponses = {
      *
      * Successful Response
      */
-    200: Array<Plant>;
+    200: Array<PlantPublic>;
 };
 
 export type ListPlantsResponse = ListPlantsResponses[keyof ListPlantsResponses];
 
 export type CreatePlantData = {
-    body: Plant;
+    body: PlantCreate;
     path?: never;
     query?: never;
     url: '/plant';
@@ -197,7 +350,7 @@ export type CreatePlantResponses = {
     /**
      * Successful Response
      */
-    200: Plant;
+    200: PlantPublic;
 };
 
 export type CreatePlantResponse = CreatePlantResponses[keyof CreatePlantResponses];

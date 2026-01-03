@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentResponses, CreatePlantData, CreatePlantErrors, CreatePlantResponses, ListEnvironmentsData, ListEnvironmentsResponses, ListPlantsData, ListPlantsResponses } from './types.gen';
+import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentResponses, CreatePlantData, CreatePlantErrors, CreatePlantResponses, GetEnvironmentData, GetEnvironmentErrors, GetEnvironmentResponses, ListEnvironmentsData, ListEnvironmentsResponses, ListPlantsData, ListPlantsResponses, UpdateEnvironmentData, UpdateEnvironmentErrors, UpdateEnvironmentResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -20,7 +20,7 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 
 export class Environment {
     /**
-     * Read Environments
+     * Get Environments
      */
     public static listEnvironments<ThrowOnError extends boolean = false>(options?: Options<ListEnvironmentsData, ThrowOnError>) {
         return (options?.client ?? client).get<ListEnvironmentsResponses, unknown, ThrowOnError>({
@@ -31,12 +31,38 @@ export class Environment {
     }
     
     /**
-     * Create Environment
+     * Post Environment
      */
     public static createEnvironment<ThrowOnError extends boolean = false>(options: Options<CreateEnvironmentData, ThrowOnError>) {
         return (options.client ?? client).post<CreateEnvironmentResponses, CreateEnvironmentErrors, ThrowOnError>({
             responseType: 'json',
             url: '/environment',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Get Environment
+     */
+    public static getEnvironment<ThrowOnError extends boolean = false>(options: Options<GetEnvironmentData, ThrowOnError>) {
+        return (options.client ?? client).get<GetEnvironmentResponses, GetEnvironmentErrors, ThrowOnError>({
+            responseType: 'json',
+            url: '/environment/{id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Patch Environment
+     */
+    public static updateEnvironment<ThrowOnError extends boolean = false>(options: Options<UpdateEnvironmentData, ThrowOnError>) {
+        return (options.client ?? client).patch<UpdateEnvironmentResponses, UpdateEnvironmentErrors, ThrowOnError>({
+            responseType: 'json',
+            url: '/environment/{id}',
             ...options,
             headers: {
                 'Content-Type': 'application/json',

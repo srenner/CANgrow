@@ -1,3 +1,4 @@
+import EnvironmentDetail from '@/pages/EnvironmentDetail.vue'
 import Envrionments from '@/pages/Envrionments.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -8,6 +9,11 @@ const router = createRouter({
       path: '/',
       name: 'Envrionments',
       component: Envrionments
+    },
+    {
+      path: '/environment/:id',
+      name: 'Environment Detail',
+      component: EnvironmentDetail
     }
   ],
 })
