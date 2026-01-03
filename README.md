@@ -52,7 +52,7 @@ All of these nodes are daisy-chained on a low voltage, reliable wired CAN bus ne
 - CircuitPython
 - TBD
 
-### Plant Notes
+### Plant Nodes
 
 - CircuitPython
 - TBD
