@@ -41,11 +41,10 @@ All of these nodes are daisy-chained on a low voltage, reliable wired CAN bus ne
 
 ### Farm Node
 
-- API: FastAPI
-- Database: SQLite
-- Web framework: Vue.js
-  - CSS: Tailwindcss
-  - UI Components: Reka UI
+- FastAPI
+- SQLite
+- Vue.js (Tailwindcss, Reka UI, Chartjs)
+- Message service in Python
 
 ### Environment Nodes
 
