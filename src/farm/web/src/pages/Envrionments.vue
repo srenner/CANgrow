@@ -1,10 +1,10 @@
 <script setup lang="ts">
     import { ref, onMounted } from 'vue'
-    import type { Environment } from '@/api/types.gen';
+    import type { EnvironmentPublic } from '@/api/types.gen';
     import { Environment as EnvironmentService } from '@/api/sdk.gen';
     import EnvironmentCard from '@/components/EnvironmentCard.vue';
 
-    const environments = ref<Environment[]>([]);
+    const environments = ref<EnvironmentPublic[]>([]);
     const loading = ref(false);
     const error = ref<string | null>(null);
 
