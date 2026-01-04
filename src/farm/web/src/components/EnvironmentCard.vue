@@ -1,5 +1,14 @@
 <script setup lang="ts">
-    const props = defineProps(['env'])
+  import router from '@/router';
+import { useRouter } from 'vue-router';
+
+  useRouter();
+  const props = defineProps(['env']);
+  const id = props.env.id.toString();
+
+  const goToEnvironment = () => {
+    router.push('/environment/' + id);
+  }
 </script>
 
 <template>
@@ -15,7 +24,7 @@
       </p>
     </div>
     <div className="flex items-center justify-between">
-      <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+      <button @click="goToEnvironment" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
         Details
       </button>
     </div>
