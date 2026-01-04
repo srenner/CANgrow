@@ -2,9 +2,8 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlmodel import Session, create_engine
-# from models import Environment, EnvironmentCreate, EnvironmentPatch, EnvironmentPublic
 from config import Settings
-from models.environment import *
+from models.environment import Environment, EnvironmentCreate, EnvironmentPatch, EnvironmentPublic
 
 
 settings = Settings()
