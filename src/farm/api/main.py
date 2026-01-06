@@ -3,7 +3,7 @@ from sqlmodel import SQLModel, create_engine
 from contextlib import asynccontextmanager
 from routers.environment_router import router as environment_router
 from routers.plant_router import router as plant_router
-from config import Settings
+from shared.config import Settings
 from fastapi.middleware.cors import CORSMiddleware
 
 

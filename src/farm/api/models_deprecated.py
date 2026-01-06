@@ -1,5 +1,5 @@
 from sqlmodel import SQLModel, Field
-from models.base_table import BaseTable
+from models_deprecated.base_table import BaseTable
 import time
 
 

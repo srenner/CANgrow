@@ -2,9 +2,8 @@ from typing import List
 from fastapi import APIRouter
 from sqlalchemy import select
 from sqlmodel import Session, create_engine
-from config import Settings
-from models_deprecated import Plant, PlantCreate, PlantPublic
-
+from shared.config import Settings
+from shared import Plant, PlantCreate, PlantPublic
 
 settings = Settings()
 engine = create_engine(settings.DATABASE_URL, echo=True, connect_args=settings.CONNECT_ARGS)

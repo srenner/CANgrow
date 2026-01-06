@@ -2,9 +2,8 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlmodel import Session, create_engine
-from config import Settings
-from models.environment import Environment, EnvironmentCreate, EnvironmentPatch, EnvironmentPublic
-
+from shared.config import Settings
+from shared import Environment, EnvironmentPublic, EnvironmentCreate, EnvironmentPatch
 
 settings = Settings()
 engine = create_engine(settings.DATABASE_URL, echo=True, connect_args=settings.CONNECT_ARGS)
