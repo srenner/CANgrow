@@ -8,7 +8,7 @@ The Farm is the brain of the system. It runs on a Raspberry Pi with a PiCAN hat 
 
 The Environment is the room or tent your plants grow in. You can have more than one. It runs on a RP2040 microcontroller with a MCP2515 CAN controller and monitors temperature, humdity, and air quality. It can control relays to activate lights, heaters, and more.
 
-And a Plant is a plant. It runs on the same RP2040 microcontroller with MCP2515 CAN controller, and monitors soil moisture, and temperature. It can activate relays that control water flow, and measure the water usage.
+And a Plant is a plant. Each Plant runs on a RP2040 microcontroller with MCP2515 CAN controller, and monitors soil moisture, and soil temperature. It can activate relays that control water flow, and measure the water usage.
 
 All of these nodes are daisy-chained on a low voltage, reliable wired CAN bus network.
 
