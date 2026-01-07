@@ -1,5 +1,5 @@
 from sqlmodel import Field, SQLModel
-from shared.base_table import BaseTable
+from shared.models.base_table import BaseTable
 
 
 class Plant(BaseTable, table=True):

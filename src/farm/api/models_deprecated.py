@@ -2,22 +2,6 @@ from sqlmodel import SQLModel, Field
 from models_deprecated.base_table import BaseTable
 import time
 
-
-
-
-class EnvironmentProfile(BaseTable, table=True):
-    """
-    Represents a grouping of EnvironmentTarget settings.
-
-    Examples:
-        - "Seedling": Lights are on continuously.
-        - "Growth Stage": Lights are on 18h per day.
-    """
-
-    id: int | None = Field(default=None, primary_key=True)
-    name: str
-    descr: str | None
-
 class EnvironmentHistory(SQLModel, table=True):
     """
     Represents the true condition for an Environment at the specified [datetime].
@@ -50,42 +34,7 @@ class EnvironmentTarget(BaseTable, table=True):
 # unsure if batches are necessary
 # class PlantBatch(SQLModel, table=True)
 
-class Plant(BaseTable, table=True):
-    """
-    A Plant node that monitors a single real world plant.
-    """
 
-    id: int | None = Field(default=None, primary_key=True)
-    species: str
-    name: str
-    can_id: str = Field(index=True)
-    environment_id: int | None = Field(default=None, foreign_key="environment.id")
-    auto_watering: bool
-    sort_order: int = Field(default=0)
-
-class PlantCreate(SQLModel):
-    """Schema for POST requests"""
-
-    species: str
-    name: str
-    can_id: str
-    environment_id: int
-    auto_watering: bool
-    sort_order: int
-
-class PlantPublic(SQLModel):
-    """Schema for GET response"""
-
-    id: int
-    created_at: int
-    updated_at: int
-    is_active: bool
-    species: str
-    name: str
-    can_id: str
-    environment_id: int
-    auto_watering: bool
-    sort_order: int
 
 class PlantHistory(SQLModel, table=True):
     """

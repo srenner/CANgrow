@@ -1,6 +1,6 @@
 from sqlmodel import SQLModel, Field
 import time
-from shared.base_table import BaseTable
+from shared.models.base_table import BaseTable
 
 class Environment(BaseTable, table=True):
     """

@@ -14,4 +14,4 @@ dependencies = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/models"]
+packages = ["src/shared"]
