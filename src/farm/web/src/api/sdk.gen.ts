@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentResponses, CreatePlantData, CreatePlantErrors, CreatePlantResponses, GetEnvironmentData, GetEnvironmentErrors, GetEnvironmentResponses, ListEnvironmentsData, ListEnvironmentsResponses, ListPlantsData, ListPlantsResponses, UpdateEnvironmentData, UpdateEnvironmentErrors, UpdateEnvironmentResponses } from './types.gen';
+import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentProfileData, CreateEnvironmentProfileErrors, CreateEnvironmentProfileResponses, CreateEnvironmentResponses, CreatePlantData, CreatePlantErrors, CreatePlantResponses, GetEnvironmentData, GetEnvironmentErrors, GetEnvironmentResponses, ListEnvironmentProfilesData, ListEnvironmentProfilesResponses, ListEnvironmentsData, ListEnvironmentsResponses, ListPlantsData, ListPlantsResponses, UpdateEnvironmentData, UpdateEnvironmentErrors, UpdateEnvironmentResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -91,6 +91,34 @@ export class Plant {
         return (options.client ?? client).post<CreatePlantResponses, CreatePlantErrors, ThrowOnError>({
             responseType: 'json',
             url: '/plant',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+}
+
+export class EnvironmentProfile {
+    /**
+     * Get Environment Profiles
+     */
+    public static listEnvironmentProfiles<ThrowOnError extends boolean = false>(options?: Options<ListEnvironmentProfilesData, ThrowOnError>) {
+        return (options?.client ?? client).get<ListEnvironmentProfilesResponses, unknown, ThrowOnError>({
+            responseType: 'json',
+            url: '/environment-profile',
+            ...options
+        });
+    }
+    
+    /**
+     * Post Environment Profile
+     */
+    public static createEnvironmentProfile<ThrowOnError extends boolean = false>(options: Options<CreateEnvironmentProfileData, ThrowOnError>) {
+        return (options.client ?? client).post<CreateEnvironmentProfileResponses, CreateEnvironmentProfileErrors, ThrowOnError>({
+            responseType: 'json',
+            url: '/environment-profile',
             ...options,
             headers: {
                 'Content-Type': 'application/json',

@@ -57,6 +57,54 @@ export type EnvironmentPatch = {
 };
 
 /**
+ * EnvironmentProfileCreate
+ *
+ * Schema for POST requests
+ */
+export type EnvironmentProfileCreate = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Descr
+     */
+    descr?: string;
+};
+
+/**
+ * EnvironmentProfilePublic
+ *
+ * Schema for GET response
+ */
+export type EnvironmentProfilePublic = {
+    /**
+     * Id
+     */
+    id: number;
+    /**
+     * Created At
+     */
+    created_at: number;
+    /**
+     * Updated At
+     */
+    updated_at: number;
+    /**
+     * Is Active
+     */
+    is_active: boolean;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Descr
+     */
+    descr?: string | null;
+};
+
+/**
  * EnvironmentPublic
  *
  * Schema for GET response
@@ -354,3 +402,46 @@ export type CreatePlantResponses = {
 };
 
 export type CreatePlantResponse = CreatePlantResponses[keyof CreatePlantResponses];
+
+export type ListEnvironmentProfilesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/environment-profile';
+};
+
+export type ListEnvironmentProfilesResponses = {
+    /**
+     * Response Listenvironmentprofiles
+     *
+     * Successful Response
+     */
+    200: Array<EnvironmentProfilePublic>;
+};
+
+export type ListEnvironmentProfilesResponse = ListEnvironmentProfilesResponses[keyof ListEnvironmentProfilesResponses];
+
+export type CreateEnvironmentProfileData = {
+    body: EnvironmentProfileCreate;
+    path?: never;
+    query?: never;
+    url: '/environment-profile';
+};
+
+export type CreateEnvironmentProfileErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CreateEnvironmentProfileError = CreateEnvironmentProfileErrors[keyof CreateEnvironmentProfileErrors];
+
+export type CreateEnvironmentProfileResponses = {
+    /**
+     * Successful Response
+     */
+    200: EnvironmentProfilePublic;
+};
+
+export type CreateEnvironmentProfileResponse = CreateEnvironmentProfileResponses[keyof CreateEnvironmentProfileResponses];
