@@ -22,8 +22,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(environment_router)
-app.include_router(plant_router)
 app.include_router(environment_profile_router)
+app.include_router(plant_router)
 
 origins = [
     "http://localhost:5173",
