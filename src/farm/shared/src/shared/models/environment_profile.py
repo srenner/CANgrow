@@ -1,3 +1,4 @@
+
 from sqlmodel import Field, SQLModel
 from shared.models.base_table import BaseTable
 

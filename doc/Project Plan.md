@@ -80,7 +80,7 @@ function calculateFlowRate()
 {
     // measure pulses with timestamps
     // total water volume over period calculated by pulse count
-    // flow rate calculated with pulses per length of time, possibly 1s
+    // flow rate calculated with pulses per unit of time, possibly 1s
 }
 ```
 
