@@ -23,6 +23,16 @@ def get_environment_profiles(*, session = Depends(get_session)):
                                         .where(EnvironmentProfile.is_active == True)).scalars().all()
     return environment_profiles
 
+@router.get("/{id}", response_model=EnvironmentProfilePublic, operation_id="getEnvironmentProfile")
+def get_environment_profile(*, session: Session = Depends(get_session), id: int, include_inactive: bool = False):
+    query = select(EnvironmentProfile).where(EnvironmentProfile.id == id)
+    if not include_inactive:
+        query = query.where(EnvironmentProfile.is_active == True)
+    environment_profile = session.exec(query).scalar_one_or_none()
+    if environment_profile is None:
+        raise HTTPException(status_code=404)
+    return environment_profile
+
 @router.post("", response_model=EnvironmentProfilePublic, operation_id="createEnvironmentProfile")
 def post_environment_profile(*, session: Session = Depends(get_session), environment_profile: EnvironmentProfileCreate):
     db_environment_profile = EnvironmentProfile.model_validate(environment_profile)

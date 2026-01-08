@@ -47,6 +47,10 @@ export type EnvironmentPatch = {
      */
     descr?: string;
     /**
+     * Environment Profile Id
+     */
+    environment_profile_id: number | null;
+    /**
      * Sort Order
      */
     sort_order?: number | null;
@@ -449,3 +453,38 @@ export type CreateEnvironmentProfileResponses = {
 };
 
 export type CreateEnvironmentProfileResponse = CreateEnvironmentProfileResponses[keyof CreateEnvironmentProfileResponses];
+
+export type GetEnvironmentProfileData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: number;
+    };
+    query?: {
+        /**
+         * Include Inactive
+         */
+        include_inactive?: boolean;
+    };
+    url: '/environment-profile/{id}';
+};
+
+export type GetEnvironmentProfileErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetEnvironmentProfileError = GetEnvironmentProfileErrors[keyof GetEnvironmentProfileErrors];
+
+export type GetEnvironmentProfileResponses = {
+    /**
+     * Successful Response
+     */
+    200: EnvironmentProfilePublic;
+};
+
+export type GetEnvironmentProfileResponse = GetEnvironmentProfileResponses[keyof GetEnvironmentProfileResponses];

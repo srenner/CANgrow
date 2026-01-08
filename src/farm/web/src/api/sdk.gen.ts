@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentProfileData, CreateEnvironmentProfileErrors, CreateEnvironmentProfileResponses, CreateEnvironmentResponses, CreatePlantData, CreatePlantErrors, CreatePlantResponses, GetEnvironmentData, GetEnvironmentErrors, GetEnvironmentResponses, ListEnvironmentProfilesData, ListEnvironmentProfilesResponses, ListEnvironmentsData, ListEnvironmentsResponses, ListPlantsData, ListPlantsResponses, UpdateEnvironmentData, UpdateEnvironmentErrors, UpdateEnvironmentResponses } from './types.gen';
+import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentProfileData, CreateEnvironmentProfileErrors, CreateEnvironmentProfileResponses, CreateEnvironmentResponses, CreatePlantData, CreatePlantErrors, CreatePlantResponses, GetEnvironmentData, GetEnvironmentErrors, GetEnvironmentProfileData, GetEnvironmentProfileErrors, GetEnvironmentProfileResponses, GetEnvironmentResponses, ListEnvironmentProfilesData, ListEnvironmentProfilesResponses, ListEnvironmentsData, ListEnvironmentsResponses, ListPlantsData, ListPlantsResponses, UpdateEnvironmentData, UpdateEnvironmentErrors, UpdateEnvironmentResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -124,6 +124,17 @@ export class EnvironmentProfile {
                 'Content-Type': 'application/json',
                 ...options.headers
             }
+        });
+    }
+    
+    /**
+     * Get Environment Profile
+     */
+    public static getEnvironmentProfile<ThrowOnError extends boolean = false>(options: Options<GetEnvironmentProfileData, ThrowOnError>) {
+        return (options.client ?? client).get<GetEnvironmentProfileResponses, GetEnvironmentProfileErrors, ThrowOnError>({
+            responseType: 'json',
+            url: '/environment-profile/{id}',
+            ...options
         });
     }
 }

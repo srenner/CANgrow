@@ -11,7 +11,7 @@ class Environment(BaseTable, table=True):
     can_id: str = Field(index=True)
     name: str
     descr: str | None
-    environment_profile_id: int | None = Field(foreign_key="environment_profile.id")
+    environment_profile_id: int | None = Field(foreign_key="environmentprofile.id")
     sort_order: int = Field(default=0)
     model_config = {"from_attributes": True}
 
@@ -29,6 +29,7 @@ class EnvironmentPatch(SQLModel):
     can_id: str | None = Field(default=None)
     name: str | None = Field(default=None)
     descr: str = Field(default="")
+    environment_profile_id: int | None
     sort_order: int | None = Field(default=None)
     is_active: bool | None = Field(default=None)
 
