@@ -37,19 +37,3 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
-
-# ### ENVIRONMENT ENDPOINTS #####################################################
-
-# @app.get("/environment/profile")
-# def read_environment_profiles():
-#     with Session(engine) as session:
-#         environment_profiles = session.exec(select(EnvironmentProfile)).all()
-#         return environment_profiles
-
-# @app.post("/environment/profile")
-# def create_environment_profile(environment_profile: EnvironmentProfile):
-#     with Session(engine) as session:
-#         session.add(environment_profile)
-#         session.commit()
-#         session.refresh(environment_profile)
-#         return environment_profile
