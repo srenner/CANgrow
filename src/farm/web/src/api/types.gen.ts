@@ -139,6 +139,10 @@ export type EnvironmentPublic = {
      */
     descr?: string | null;
     /**
+     * Environment Profile Id
+     */
+    environment_profile_id: number | null;
+    /**
      * Sort Order
      */
     sort_order: number;

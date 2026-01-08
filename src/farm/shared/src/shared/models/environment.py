@@ -11,6 +11,7 @@ class Environment(BaseTable, table=True):
     can_id: str = Field(index=True)
     name: str
     descr: str | None
+    environment_profile_id: int | None = Field(foreign_key="environment_profile.id")
     sort_order: int = Field(default=0)
     model_config = {"from_attributes": True}
 
@@ -41,4 +42,5 @@ class EnvironmentPublic(SQLModel):
     can_id: str
     name: str
     descr: str | None = Field(default="")
+    environment_profile_id: int | None
     sort_order: int
