@@ -1,6 +1,6 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
+from sqlalchemy import select # todo - move to sqlmodel import?
 from sqlmodel import Session, create_engine
 from shared.config import Settings
 from shared import Environment, EnvironmentPublic, EnvironmentCreate, EnvironmentPatch
