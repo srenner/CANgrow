@@ -2,8 +2,9 @@ from fastapi import FastAPI
 from sqlmodel import SQLModel, create_engine
 from contextlib import asynccontextmanager
 from routers.environment_router import router as environment_router
-from routers.plant_router import router as plant_router
+from routers.environment_history_router import router as environment_history_router
 from routers.environment_profile_router import router as environment_profile_router
+from routers.plant_router import router as plant_router
 from shared.config import Settings
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -22,6 +23,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(environment_router)
+app.include_router(environment_history_router)
 app.include_router(environment_profile_router)
 app.include_router(plant_router)
 
