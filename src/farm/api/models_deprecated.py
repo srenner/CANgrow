@@ -2,20 +2,6 @@ from sqlmodel import SQLModel, Field
 from models_deprecated.base_table import BaseTable
 import time
 
-class EnvironmentHistory(SQLModel, table=True):
-    """
-    Represents the true condition for an Environment at the specified [datetime].
-    """
-
-    id: int | None = Field(default=None, primary_key=True)
-    environment_id: int | None = Field(default=None, foreign_key="environment.id")
-    light_status: bool | None
-    heat_status: bool | None
-    temperature: float | None
-    humidity: float | None
-    gas: float | None
-    datetime: int = Field(default=int(time.time()))
-
 class EnvironmentTarget(BaseTable, table=True):
     """
     Represents the ideal condition for an Environment at the specified [timestamp] time of day.
