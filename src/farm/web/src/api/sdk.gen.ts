@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentProfileData, CreateEnvironmentProfileErrors, CreateEnvironmentProfileResponses, CreateEnvironmentResponses, CreatePlantData, CreatePlantErrors, CreatePlantResponses, GetEnvironmentData, GetEnvironmentErrors, GetEnvironmentProfileData, GetEnvironmentProfileErrors, GetEnvironmentProfileResponses, GetEnvironmentResponses, ListEnvironmentProfilesData, ListEnvironmentProfilesResponses, ListEnvironmentsData, ListEnvironmentsResponses, ListPlantsData, ListPlantsResponses, UpdateEnvironmentData, UpdateEnvironmentErrors, UpdateEnvironmentResponses } from './types.gen';
+import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentHistoryData, CreateEnvironmentHistoryErrors, CreateEnvironmentHistoryResponses, CreateEnvironmentProfileData, CreateEnvironmentProfileErrors, CreateEnvironmentProfileResponses, CreateEnvironmentResponses, CreatePlantData, CreatePlantErrors, CreatePlantResponses, GetEnvironmentData, GetEnvironmentErrors, GetEnvironmentProfileData, GetEnvironmentProfileErrors, GetEnvironmentProfileResponses, GetEnvironmentResponses, GetLatestEnvironmentHistoryData, GetLatestEnvironmentHistoryErrors, GetLatestEnvironmentHistoryResponses, ListEnvironmentProfilesData, ListEnvironmentProfilesResponses, ListEnvironmentsData, ListEnvironmentsResponses, ListPlantsData, ListPlantsResponses, UpdateEnvironmentData, UpdateEnvironmentErrors, UpdateEnvironmentResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -72,25 +72,25 @@ export class Environment {
     }
 }
 
-export class Plant {
+export class EnvironmentHistory {
     /**
-     * Read Plants
+     * Get Latest Environment History
      */
-    public static listPlants<ThrowOnError extends boolean = false>(options?: Options<ListPlantsData, ThrowOnError>) {
-        return (options?.client ?? client).get<ListPlantsResponses, unknown, ThrowOnError>({
+    public static getLatestEnvironmentHistory<ThrowOnError extends boolean = false>(options: Options<GetLatestEnvironmentHistoryData, ThrowOnError>) {
+        return (options.client ?? client).get<GetLatestEnvironmentHistoryResponses, GetLatestEnvironmentHistoryErrors, ThrowOnError>({
             responseType: 'json',
-            url: '/plant',
+            url: '/environment-history/latest/{environmentId}',
             ...options
         });
     }
     
     /**
-     * Create Plant
+     * Post Environment History
      */
-    public static createPlant<ThrowOnError extends boolean = false>(options: Options<CreatePlantData, ThrowOnError>) {
-        return (options.client ?? client).post<CreatePlantResponses, CreatePlantErrors, ThrowOnError>({
+    public static createEnvironmentHistory<ThrowOnError extends boolean = false>(options: Options<CreateEnvironmentHistoryData, ThrowOnError>) {
+        return (options.client ?? client).post<CreateEnvironmentHistoryResponses, CreateEnvironmentHistoryErrors, ThrowOnError>({
             responseType: 'json',
-            url: '/plant',
+            url: '/environment-history',
             ...options,
             headers: {
                 'Content-Type': 'application/json',
@@ -135,6 +135,34 @@ export class EnvironmentProfile {
             responseType: 'json',
             url: '/environment-profile/{id}',
             ...options
+        });
+    }
+}
+
+export class Plant {
+    /**
+     * Read Plants
+     */
+    public static listPlants<ThrowOnError extends boolean = false>(options?: Options<ListPlantsData, ThrowOnError>) {
+        return (options?.client ?? client).get<ListPlantsResponses, unknown, ThrowOnError>({
+            responseType: 'json',
+            url: '/plant',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Plant
+     */
+    public static createPlant<ThrowOnError extends boolean = false>(options: Options<CreatePlantData, ThrowOnError>) {
+        return (options.client ?? client).post<CreatePlantResponses, CreatePlantErrors, ThrowOnError>({
+            responseType: 'json',
+            url: '/plant',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
         });
     }
 }

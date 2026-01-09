@@ -29,6 +29,86 @@ export type EnvironmentCreate = {
 };
 
 /**
+ * EnvironmentHistoryCreate
+ *
+ * Schema for POST requests
+ */
+export type EnvironmentHistoryCreate = {
+    /**
+     * Environment Id
+     */
+    environment_id: number | null;
+    /**
+     * Environment Profile Id
+     */
+    environment_profile_id: number | null;
+    /**
+     * Light Status
+     */
+    light_status: boolean | null;
+    /**
+     * Heat Status
+     */
+    heat_status: boolean | null;
+    /**
+     * Temperature
+     */
+    temperature: number | null;
+    /**
+     * Humidity
+     */
+    humidity: number | null;
+    /**
+     * Gas
+     */
+    gas: number | null;
+};
+
+/**
+ * EnvironmentHistoryPublic
+ *
+ * Schema for GET response
+ */
+export type EnvironmentHistoryPublic = {
+    /**
+     * Id
+     */
+    id: number;
+    /**
+     * Environment Id
+     */
+    environment_id: number | null;
+    /**
+     * Environment Profile Id
+     */
+    environment_profile_id: number | null;
+    /**
+     * Light Status
+     */
+    light_status: boolean | null;
+    /**
+     * Heat Status
+     */
+    heat_status: boolean | null;
+    /**
+     * Temperature
+     */
+    temperature: number | null;
+    /**
+     * Humidity
+     */
+    humidity: number | null;
+    /**
+     * Gas
+     */
+    gas: number | null;
+    /**
+     * Datetime
+     */
+    datetime: number;
+};
+
+/**
  * EnvironmentPatch
  *
  * Schema for PATCH requests
@@ -368,48 +448,60 @@ export type UpdateEnvironmentResponses = {
 
 export type UpdateEnvironmentResponse = UpdateEnvironmentResponses[keyof UpdateEnvironmentResponses];
 
-export type ListPlantsData = {
+export type GetLatestEnvironmentHistoryData = {
     body?: never;
-    path?: never;
+    path: {
+        /**
+         * Environmentid
+         */
+        environmentId: number;
+    };
     query?: never;
-    url: '/plant';
+    url: '/environment-history/latest/{environmentId}';
 };
 
-export type ListPlantsResponses = {
-    /**
-     * Response Listplants
-     *
-     * Successful Response
-     */
-    200: Array<PlantPublic>;
-};
-
-export type ListPlantsResponse = ListPlantsResponses[keyof ListPlantsResponses];
-
-export type CreatePlantData = {
-    body: PlantCreate;
-    path?: never;
-    query?: never;
-    url: '/plant';
-};
-
-export type CreatePlantErrors = {
+export type GetLatestEnvironmentHistoryErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type CreatePlantError = CreatePlantErrors[keyof CreatePlantErrors];
+export type GetLatestEnvironmentHistoryError = GetLatestEnvironmentHistoryErrors[keyof GetLatestEnvironmentHistoryErrors];
 
-export type CreatePlantResponses = {
+export type GetLatestEnvironmentHistoryResponses = {
     /**
      * Successful Response
      */
-    200: PlantPublic;
+    200: EnvironmentHistoryPublic;
 };
 
-export type CreatePlantResponse = CreatePlantResponses[keyof CreatePlantResponses];
+export type GetLatestEnvironmentHistoryResponse = GetLatestEnvironmentHistoryResponses[keyof GetLatestEnvironmentHistoryResponses];
+
+export type CreateEnvironmentHistoryData = {
+    body: EnvironmentHistoryCreate;
+    path?: never;
+    query?: never;
+    url: '/environment-history';
+};
+
+export type CreateEnvironmentHistoryErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CreateEnvironmentHistoryError = CreateEnvironmentHistoryErrors[keyof CreateEnvironmentHistoryErrors];
+
+export type CreateEnvironmentHistoryResponses = {
+    /**
+     * Successful Response
+     */
+    200: EnvironmentHistoryPublic;
+};
+
+export type CreateEnvironmentHistoryResponse = CreateEnvironmentHistoryResponses[keyof CreateEnvironmentHistoryResponses];
 
 export type ListEnvironmentProfilesData = {
     body?: never;
@@ -488,3 +580,46 @@ export type GetEnvironmentProfileResponses = {
 };
 
 export type GetEnvironmentProfileResponse = GetEnvironmentProfileResponses[keyof GetEnvironmentProfileResponses];
+
+export type ListPlantsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/plant';
+};
+
+export type ListPlantsResponses = {
+    /**
+     * Response Listplants
+     *
+     * Successful Response
+     */
+    200: Array<PlantPublic>;
+};
+
+export type ListPlantsResponse = ListPlantsResponses[keyof ListPlantsResponses];
+
+export type CreatePlantData = {
+    body: PlantCreate;
+    path?: never;
+    query?: never;
+    url: '/plant';
+};
+
+export type CreatePlantErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CreatePlantError = CreatePlantErrors[keyof CreatePlantErrors];
+
+export type CreatePlantResponses = {
+    /**
+     * Successful Response
+     */
+    200: PlantPublic;
+};
+
+export type CreatePlantResponse = CreatePlantResponses[keyof CreatePlantResponses];
