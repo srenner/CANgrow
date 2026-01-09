@@ -1,8 +1,8 @@
 <script setup lang="ts">
     import { useRoute } from 'vue-router';
     import { ref, onMounted, computed } from 'vue'
-    import { type EnvironmentProfilePublic, type EnvironmentPublic } from '@/api/types.gen';
-    import { Environment as EnvironmentService, EnvironmentProfile as EnvironmentProfileService } from '@/api/sdk.gen';
+    import { type EnvironmentHistoryPublic, type EnvironmentProfilePublic, type EnvironmentPublic } from '@/api/types.gen';
+    import { Environment as EnvironmentService, EnvironmentProfile as EnvironmentProfileService, EnvironmentHistory as EnvironmentHistoryService } from '@/api/sdk.gen';
     import EnvironmentHistoryLatest from '@/components/EnvironmentHistoryLatest.vue';
 
     const route = useRoute()
@@ -10,6 +10,7 @@
 
     const environment = ref<EnvironmentPublic>();
     const environmentProfile = ref<EnvironmentProfilePublic>();
+    const environmentHistoryLatest = ref<EnvironmentHistoryPublic>();
     const loading = ref(false);
     const error = ref<string | null>(null);
 
@@ -32,6 +33,7 @@
             loading.value = false;
             if(environment.value?.environment_profile_id !== null) {
                 await loadActiveProfile();
+                await loadLatestHistory();
             }
         }
     }
@@ -49,6 +51,19 @@
         }
     }
 
+    async function loadLatestHistory() {
+        try {
+            const { data } = await EnvironmentHistoryService.getLatestEnvironmentHistory({path: { environmentId: id.value }})
+            environmentHistoryLatest.value = data;
+        }
+        catch(err: any) {
+            //
+        }
+        finally {
+            //
+        }
+    }
+
 </script>
 
 <template>
@@ -61,8 +76,13 @@
             <div>
                 {{ environment }}
             </div>
+            <hr>
             <div>
                 {{ environmentProfile }}
+            </div>
+            <hr>
+            <div>
+                {{ environmentHistoryLatest }}
             </div>
         </div>
         <div>
