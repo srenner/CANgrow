@@ -12,4 +12,3 @@ class Crop(BaseTable, table=True):
     batch_number: str | None
     start_date: int | None
     end_date: int | None
-    
