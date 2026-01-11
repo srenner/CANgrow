@@ -14,7 +14,7 @@ class EnvironmentHistory(SQLModel, table=True):
     temperature: float | None
     humidity: float | None
     gas: float | None
-    datetime: int = Field(default=int(time.time()))
+    datetime: int = Field(default_factory=lambda: int(time.time()))
 
 class EnvironmentHistoryCreate(SQLModel):
     """Schema for POST requests"""
