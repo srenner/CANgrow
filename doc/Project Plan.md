@@ -90,3 +90,16 @@ Service receives firehose CAN data
 Every 1s POST to FastAPI
 FastAPI websocket to vue app
 Service writes to db every 60s
+
+## Initial Software Setup
+
+- Landing page for node config
+  - Detect CAN nodes
+  - Collect CAN node metadata
+  - If env node exists and canid not in db, prompt user to name/configure
+  - flash node led while setting up
+  
+- Icons
+  - server for service ping
+  - stop for status icon (by color)
+  - globe-alt for bus status?
