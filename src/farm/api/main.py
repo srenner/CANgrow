@@ -6,6 +6,7 @@ from routers.environment_history_router import router as environment_history_rou
 from routers.environment_profile_router import router as environment_profile_router
 from routers.environment_target_router import router as environment_target_router
 from routers.plant_router import router as plant_router
+from routers.live_router import router as live_router
 from shared.config import Settings
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -28,6 +29,8 @@ app.include_router(environment_history_router)
 app.include_router(environment_profile_router)
 app.include_router(environment_target_router)
 app.include_router(plant_router)
+
+app.include_router(live_router)
 
 origins = [
     "http://localhost:5173",
