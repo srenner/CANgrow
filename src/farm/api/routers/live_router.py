@@ -10,7 +10,7 @@ from shared.models.environment_history import EnvironmentHistory, EnvironmentHis
 environment_history_cache = LiveCache[EnvironmentHistory](
     timestamp_attr=EnvironmentHistory.datetime.key, 
     group_id_attr=EnvironmentHistory.environment_id.key, 
-    time_window_minutes=2)
+    time_window_minutes=15)
 
 settings = Settings()
 engine = create_engine(settings.DATABASE_URL, echo=True, connect_args=settings.CONNECT_ARGS)
