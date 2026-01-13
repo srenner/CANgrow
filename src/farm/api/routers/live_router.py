@@ -24,7 +24,7 @@ router = APIRouter(
     tags=["live"]
 )
 
-@router.get("/envioronment-history", response_model=List[dict])
+@router.get("/environment-history", response_model=List[dict])
 def get_live_environment_history():
     return jsonable_encoder(environment_history_cache.items)
 
