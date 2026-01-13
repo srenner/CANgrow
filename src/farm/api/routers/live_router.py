@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlmodel import Session
 from shared.config import Settings
 from shared.live_cache import LiveCache
-from shared.models.environment_history import EnvironmentHistory, EnvironmentHistoryCreate
+from shared.models.environment_history import EnvironmentHistory, EnvironmentHistoryCreate, EnvironmentHistoryPublic
 
 environment_history_cache = LiveCache[EnvironmentHistory](
     timestamp_attr=EnvironmentHistory.datetime.key, 
@@ -27,6 +27,10 @@ router = APIRouter(
 @router.get("/environment-history", response_model=List[dict])
 def get_live_environment_history():
     return jsonable_encoder(environment_history_cache.items)
+
+@router.get("/environment-history/{environmentId}", response_model=List[EnvironmentHistoryPublic])
+def get_live_environment_history_by_group(environmentId: int):
+        return jsonable_encoder(environment_history_cache.get_group(environmentId))
 
 @router.post("/environment-history", response_model=int, operation_id="createLiveEnvironmentHistory")
 def post_live_environment_history(*, environment_history: EnvironmentHistoryCreate):

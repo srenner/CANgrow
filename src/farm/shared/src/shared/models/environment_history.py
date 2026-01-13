@@ -30,7 +30,7 @@ class EnvironmentHistoryCreate(SQLModel):
 class EnvironmentHistoryPublic(SQLModel):
     """Schema for GET response"""
 
-    id: int
+    id: int | None
     environment_id: int | None
     environment_profile_id: int | None
     light_status: bool | None

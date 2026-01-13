@@ -33,7 +33,7 @@ class LiveCache(Generic[T]):
         """ Get all items where group_id_attr == group_id_value """
         
         self._cleanup()
-        return [item for item in self._items if item[self.group_id_attr] == group_id_value]
+        return [item for item in self._items if getattr(item, self.group_id_attr) == group_id_value]
 
     def _cleanup(self) -> None:
         """Remove items outside of the time window"""
