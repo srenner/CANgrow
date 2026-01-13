@@ -1,13 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException
+from typing import List
+from fastapi import APIRouter
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy import create_engine
-from sqlmodel import Session, select
+from sqlmodel import Session
 from shared.config import Settings
 from shared.live_cache import LiveCache
-from shared.models.environment_history import EnvironmentHistory, EnvironmentHistoryCreate, EnvironmentHistoryPublic
-import json
+from shared.models.environment_history import EnvironmentHistory, EnvironmentHistoryCreate
 
 environment_history_cache = LiveCache(EnvironmentHistory, 'environment_id', 15)
-
 
 settings = Settings()
 engine = create_engine(settings.DATABASE_URL, echo=True, connect_args=settings.CONNECT_ARGS)
@@ -21,16 +21,13 @@ router = APIRouter(
     tags=["live"]
 )
 
-@router.get("/envioronment-history", response_model=str)
+@router.get("/envioronment-history", response_model=List[dict])
 def get_live_environment_history():
-    data = [item.__dict__ for item in environment_history_cache.items]
-    return json.dumps(data, default=str)
+    items = list(environment_history_cache.items)
+    return jsonable_encoder(items)
 
 @router.post("/environment-history", response_model=int, operation_id="createLiveEnvironmentHistory")
 def post_live_environment_history(*, environment_history: EnvironmentHistoryCreate):
     db_environment_history = EnvironmentHistory.model_validate(environment_history)
     environment_history_cache.add(db_environment_history)
     return len(environment_history_cache.items)
-
-
-    # print(db_environment_history.model_dump_json())
