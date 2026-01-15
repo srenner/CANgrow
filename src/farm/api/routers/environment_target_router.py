@@ -14,7 +14,7 @@ def get_session():
 
 router = APIRouter(
     prefix="/environment-target",
-    tags=["enviornment-target"]
+    tags=["environnment-target"]
 )
 
 @router.get("/{environmentProfileId}", response_model=List[EnvironmentTargetPublic], operation_id="getEnvironmentTargetsForProfile")
