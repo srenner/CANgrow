@@ -1,0 +1,19 @@
+apiAddress: 0.0.0.0:9997
+
+authMethod: internal
+authInternalUsers:
+  - user: any
+    pass:
+    ips: []
+    permissions:
+      - action: api
+      - action: read
+      - action: playback
+      - action: publish
+paths:
+  cam:
+    source: rpiCamera
+    rpiCameraWidth: 640
+    rpiCameraHeight: 480
+    rpiCameraFPS: 10
+    rpiCameraBitrate: 1000000
