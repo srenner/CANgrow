@@ -13,9 +13,28 @@
     const environmentHistoryLatest = ref<EnvironmentHistoryPublic>();
     const loading = ref(false);
     const error = ref<string | null>(null);
+    let messages: any = [];
 
     onMounted(() => {
         loadEnvironment();
+        const ws = new WebSocket('ws://localhost:8000/live/ws/environment-history/' + id.value);
+ws.onopen = () => {
+        console.log('WebSocket connected');
+    };
+    
+    ws.onmessage = (event) => {
+        messages.push(event.data);
+        console.log('Message received:', event.data);
+    };
+    
+    ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+    };
+    
+    ws.onclose = (event) => {
+        console.log('WebSocket closed:', event.code, event.reason);
+    };
+
     });
 
     async function loadEnvironment() {
@@ -87,6 +106,9 @@
         </div>
         <div>
             <EnvironmentHistoryLatest />
+        </div>
+        <div>
+            {{ messages }}
         </div>
     </div>
     

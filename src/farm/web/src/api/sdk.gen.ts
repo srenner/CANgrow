@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentHistoryData, CreateEnvironmentHistoryErrors, CreateEnvironmentHistoryResponses, CreateEnvironmentProfileData, CreateEnvironmentProfileErrors, CreateEnvironmentProfileResponses, CreateEnvironmentResponses, CreatePlantData, CreatePlantErrors, CreatePlantResponses, GetEnvironmentData, GetEnvironmentErrors, GetEnvironmentProfileData, GetEnvironmentProfileErrors, GetEnvironmentProfileResponses, GetEnvironmentResponses, GetLatestEnvironmentHistoryData, GetLatestEnvironmentHistoryErrors, GetLatestEnvironmentHistoryResponses, ListEnvironmentProfilesData, ListEnvironmentProfilesResponses, ListEnvironmentsData, ListEnvironmentsResponses, ListPlantsData, ListPlantsResponses, UpdateEnvironmentData, UpdateEnvironmentErrors, UpdateEnvironmentResponses } from './types.gen';
+import type { CreateEnvironmentData, CreateEnvironmentErrors, CreateEnvironmentHistoryData, CreateEnvironmentHistoryErrors, CreateEnvironmentHistoryResponses, CreateEnvironmentProfileData, CreateEnvironmentProfileErrors, CreateEnvironmentProfileResponses, CreateEnvironmentResponses, CreateEnvironmentTargetData, CreateEnvironmentTargetErrors, CreateEnvironmentTargetResponses, CreateLiveEnvironmentHistoryData, CreateLiveEnvironmentHistoryErrors, CreateLiveEnvironmentHistoryResponses, CreatePlantData, CreatePlantErrors, CreatePlantResponses, GetEnvironmentData, GetEnvironmentErrors, GetEnvironmentProfileData, GetEnvironmentProfileErrors, GetEnvironmentProfileResponses, GetEnvironmentResponses, GetEnvironmentTargetsForProfileData, GetEnvironmentTargetsForProfileErrors, GetEnvironmentTargetsForProfileResponses, GetLatestEnvironmentHistoryData, GetLatestEnvironmentHistoryErrors, GetLatestEnvironmentHistoryResponses, GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetData, GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetErrors, GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetResponses, GetLiveEnvironmentHistoryLiveEnvironmentHistoryGetData, GetLiveEnvironmentHistoryLiveEnvironmentHistoryGetResponses, ListEnvironmentProfilesData, ListEnvironmentProfilesResponses, ListEnvironmentsData, ListEnvironmentsResponses, ListPlantsData, ListPlantsResponses, UpdateEnvironmentData, UpdateEnvironmentErrors, UpdateEnvironmentResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -139,6 +139,34 @@ export class EnvironmentProfile {
     }
 }
 
+export class EnvironnmentTarget {
+    /**
+     * Get Environment Targets
+     */
+    public static getEnvironmentTargetsForProfile<ThrowOnError extends boolean = false>(options: Options<GetEnvironmentTargetsForProfileData, ThrowOnError>) {
+        return (options.client ?? client).get<GetEnvironmentTargetsForProfileResponses, GetEnvironmentTargetsForProfileErrors, ThrowOnError>({
+            responseType: 'json',
+            url: '/environment-target/{environmentProfileId}',
+            ...options
+        });
+    }
+    
+    /**
+     * Post Environment Target
+     */
+    public static createEnvironmentTarget<ThrowOnError extends boolean = false>(options: Options<CreateEnvironmentTargetData, ThrowOnError>) {
+        return (options.client ?? client).post<CreateEnvironmentTargetResponses, CreateEnvironmentTargetErrors, ThrowOnError>({
+            responseType: 'json',
+            url: '/environment-target',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+}
+
 export class Plant {
     /**
      * Read Plants
@@ -163,6 +191,45 @@ export class Plant {
                 'Content-Type': 'application/json',
                 ...options.headers
             }
+        });
+    }
+}
+
+export class Live {
+    /**
+     * Get Live Environment History
+     */
+    public static getLiveEnvironmentHistoryLiveEnvironmentHistoryGet<ThrowOnError extends boolean = false>(options?: Options<GetLiveEnvironmentHistoryLiveEnvironmentHistoryGetData, ThrowOnError>) {
+        return (options?.client ?? client).get<GetLiveEnvironmentHistoryLiveEnvironmentHistoryGetResponses, unknown, ThrowOnError>({
+            responseType: 'json',
+            url: '/live/environment-history',
+            ...options
+        });
+    }
+    
+    /**
+     * Post Live Environment History
+     */
+    public static createLiveEnvironmentHistory<ThrowOnError extends boolean = false>(options: Options<CreateLiveEnvironmentHistoryData, ThrowOnError>) {
+        return (options.client ?? client).post<CreateLiveEnvironmentHistoryResponses, CreateLiveEnvironmentHistoryErrors, ThrowOnError>({
+            responseType: 'json',
+            url: '/live/environment-history',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Get Live Environment History By Group
+     */
+    public static getLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGet<ThrowOnError extends boolean = false>(options: Options<GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetData, ThrowOnError>) {
+        return (options.client ?? client).get<GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetResponses, GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetErrors, ThrowOnError>({
+            responseType: 'json',
+            url: '/live/environment-history/{environmentId}',
+            ...options
         });
     }
 }

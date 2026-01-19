@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import create_engine
 from sqlmodel import Session
@@ -11,6 +11,8 @@ environment_history_cache = LiveCache[EnvironmentHistory](
     timestamp_attr=EnvironmentHistory.datetime.key, 
     group_id_attr=EnvironmentHistory.environment_id.key, 
     time_window_minutes=15)
+
+ws_connections: dict[int, WebSocket] = {}
 
 settings = Settings()
 engine = create_engine(settings.DATABASE_URL, echo=True, connect_args=settings.CONNECT_ARGS)
@@ -32,8 +34,33 @@ def get_live_environment_history():
 def get_live_environment_history_by_group(environmentId: int):
         return jsonable_encoder(environment_history_cache.get_group(environmentId))
 
+@router.websocket("/ws/environment-history/{environmentId}")
+async def environment_history_ws(websocket: WebSocket, environmentId: int):
+    await websocket.accept()
+    ws_connections[environmentId] = websocket
+    try:
+        while True:
+            await websocket.receive_text()
+    except WebSocketDisconnect:
+        ws_connections.pop(environmentId, None)
+
 @router.post("/environment-history", response_model=int, operation_id="createLiveEnvironmentHistory")
-def post_live_environment_history(*, environment_history: EnvironmentHistoryCreate):
-    db_environment_history = EnvironmentHistory.model_validate(environment_history)
-    environment_history_cache.add(db_environment_history)
+async def post_live_environment_history(*, environment_history: EnvironmentHistoryCreate):
+    validated_environment_history = EnvironmentHistory.model_validate(environment_history)
+    environment_history_cache.add(validated_environment_history)
+
+    disconnected = []
+    for connection in ws_connections:
+        try:
+              print("sending~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+              #await connection.send_json({id: 1})
+              await connection.send_text("hello ws")
+              # await connection.send_json(validated_environment_history.model_dump())
+        except:
+            disconnected.append(connection)
+    for connection in disconnected:
+         # ws_connections.remove(connection)
+         # ws_connections.pop()
+         pass
+
     return len(environment_history_cache.items)

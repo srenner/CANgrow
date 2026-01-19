@@ -73,7 +73,7 @@ export type EnvironmentHistoryPublic = {
     /**
      * Id
      */
-    id: number;
+    id: number | null;
     /**
      * Environment Id
      */
@@ -230,6 +230,78 @@ export type EnvironmentPublic = {
      * Sort Order
      */
     sort_order: number;
+};
+
+/**
+ * EnvironmentTargetCreate
+ *
+ * Schema for POST requests
+ */
+export type EnvironmentTargetCreate = {
+    /**
+     * Environment Profile Id
+     */
+    environment_profile_id: number;
+    /**
+     * Timestamp
+     */
+    timestamp: number;
+    /**
+     * Light Status
+     */
+    light_status: boolean;
+    /**
+     * Target Temperature
+     */
+    target_temperature: number;
+    /**
+     * Target Humidity
+     */
+    target_humidity: number;
+};
+
+/**
+ * EnvironmentTargetPublic
+ *
+ * Schema for GET response
+ */
+export type EnvironmentTargetPublic = {
+    /**
+     * Id
+     */
+    id: number;
+    /**
+     * Created At
+     */
+    created_at: number;
+    /**
+     * Updated At
+     */
+    updated_at: number;
+    /**
+     * Is Active
+     */
+    is_active: boolean;
+    /**
+     * Environment Profile Id
+     */
+    environment_profile_id: number;
+    /**
+     * Timestamp
+     */
+    timestamp: number;
+    /**
+     * Light Status
+     */
+    light_status: boolean;
+    /**
+     * Target Temperature
+     */
+    target_temperature: number;
+    /**
+     * Target Humidity
+     */
+    target_humidity: number;
 };
 
 /**
@@ -581,6 +653,63 @@ export type GetEnvironmentProfileResponses = {
 
 export type GetEnvironmentProfileResponse = GetEnvironmentProfileResponses[keyof GetEnvironmentProfileResponses];
 
+export type GetEnvironmentTargetsForProfileData = {
+    body?: never;
+    path: {
+        /**
+         * Environmentprofileid
+         */
+        environmentProfileId: number;
+    };
+    query?: never;
+    url: '/environment-target/{environmentProfileId}';
+};
+
+export type GetEnvironmentTargetsForProfileErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetEnvironmentTargetsForProfileError = GetEnvironmentTargetsForProfileErrors[keyof GetEnvironmentTargetsForProfileErrors];
+
+export type GetEnvironmentTargetsForProfileResponses = {
+    /**
+     * Response Getenvironmenttargetsforprofile
+     *
+     * Successful Response
+     */
+    200: Array<EnvironmentTargetPublic>;
+};
+
+export type GetEnvironmentTargetsForProfileResponse = GetEnvironmentTargetsForProfileResponses[keyof GetEnvironmentTargetsForProfileResponses];
+
+export type CreateEnvironmentTargetData = {
+    body: EnvironmentTargetCreate;
+    path?: never;
+    query?: never;
+    url: '/environment-target';
+};
+
+export type CreateEnvironmentTargetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CreateEnvironmentTargetError = CreateEnvironmentTargetErrors[keyof CreateEnvironmentTargetErrors];
+
+export type CreateEnvironmentTargetResponses = {
+    /**
+     * Successful Response
+     */
+    200: EnvironmentTargetPublic;
+};
+
+export type CreateEnvironmentTargetResponse = CreateEnvironmentTargetResponses[keyof CreateEnvironmentTargetResponses];
+
 export type ListPlantsData = {
     body?: never;
     path?: never;
@@ -623,3 +752,82 @@ export type CreatePlantResponses = {
 };
 
 export type CreatePlantResponse = CreatePlantResponses[keyof CreatePlantResponses];
+
+export type GetLiveEnvironmentHistoryLiveEnvironmentHistoryGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/live/environment-history';
+};
+
+export type GetLiveEnvironmentHistoryLiveEnvironmentHistoryGetResponses = {
+    /**
+     * Response Get Live Environment History Live Environment History Get
+     *
+     * Successful Response
+     */
+    200: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type GetLiveEnvironmentHistoryLiveEnvironmentHistoryGetResponse = GetLiveEnvironmentHistoryLiveEnvironmentHistoryGetResponses[keyof GetLiveEnvironmentHistoryLiveEnvironmentHistoryGetResponses];
+
+export type CreateLiveEnvironmentHistoryData = {
+    body: EnvironmentHistoryCreate;
+    path?: never;
+    query?: never;
+    url: '/live/environment-history';
+};
+
+export type CreateLiveEnvironmentHistoryErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CreateLiveEnvironmentHistoryError = CreateLiveEnvironmentHistoryErrors[keyof CreateLiveEnvironmentHistoryErrors];
+
+export type CreateLiveEnvironmentHistoryResponses = {
+    /**
+     * Response Createliveenvironmenthistory
+     *
+     * Successful Response
+     */
+    200: number;
+};
+
+export type CreateLiveEnvironmentHistoryResponse = CreateLiveEnvironmentHistoryResponses[keyof CreateLiveEnvironmentHistoryResponses];
+
+export type GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Environmentid
+         */
+        environmentId: number;
+    };
+    query?: never;
+    url: '/live/environment-history/{environmentId}';
+};
+
+export type GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetError = GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetErrors[keyof GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetErrors];
+
+export type GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetResponses = {
+    /**
+     * Response Get Live Environment History By Group Live Environment History  Environmentid  Get
+     *
+     * Successful Response
+     */
+    200: Array<EnvironmentHistoryPublic>;
+};
+
+export type GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetResponse = GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetResponses[keyof GetLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGetResponses];
