@@ -1,0 +1,1 @@
+You can use networked cameras in your CANgrow setup. If you happen to use a Raspberry Pi Zero W with Camera v2 as your camera module, this folder has working config and code that might be helpful.
