@@ -50,17 +50,15 @@ async def post_live_environment_history(*, environment_history: EnvironmentHisto
     environment_history_cache.add(validated_environment_history)
 
     disconnected = []
-    for connection in ws_connections:
+    for env_id, connection in ws_connections.items():
         try:
-              print("sending~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
               #await connection.send_json({id: 1})
-              await connection.send_text("hello ws")
-              # await connection.send_json(validated_environment_history.model_dump())
+              # await connection.send_text("hello ws")
+              await connection.send_json(validated_environment_history.model_dump())
         except:
-            disconnected.append(connection)
-    for connection in disconnected:
-         # ws_connections.remove(connection)
-         # ws_connections.pop()
+            disconnected.append(env_id)
+    for env_id in disconnected:
+         ws_connections.pop(env_id, None)
          pass
 
     return len(environment_history_cache.items)
