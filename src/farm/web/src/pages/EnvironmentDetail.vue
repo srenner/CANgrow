@@ -20,7 +20,6 @@
         const ws = new WebSocket('ws://localhost:8000/live/ws/environment-history/' + id.value);
         ws.onopen = () => {
             console.log('WebSocket connected');
-            messages
         };
         ws.onmessage = (event) => {
             console.log('Message received');
