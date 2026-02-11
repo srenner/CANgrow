@@ -41,6 +41,7 @@
         </button>
         
     </header>
+    <hr class="mt-2 mb-2">
 </template>
 
 <style scoped></style>

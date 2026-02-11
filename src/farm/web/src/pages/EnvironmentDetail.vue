@@ -84,7 +84,10 @@
 
 <template>
     
-    <h1>{{ environment?.name }}</h1>
+    <h1>
+        <span>{{ environment?.name }}</span>
+        <span v-if="environment?.descr">{{ ' - ' + environment.descr }}</span>
+    </h1>
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
