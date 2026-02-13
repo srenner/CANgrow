@@ -19,7 +19,15 @@
 
 <template>
     <div>
-        light: on heat: off temp: 00.0 humid: 00.0 as of {{ now }}
+        light: on
+        <br>
+        heat: off
+        <br>
+        temp: 00.0 
+        <br>
+        humid: 00.0 
+        <br>
+        as of {{ now }}
     </div>
 </template>
 

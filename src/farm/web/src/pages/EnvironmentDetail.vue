@@ -91,24 +91,20 @@
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
-        <div class="font-mono p-5">
-            <div>
-                {{ environment }}
-            </div>
-            <hr>
-            <div>
-                {{ environmentProfile }}
-            </div>
-            <hr>
-            <div>
-                {{ environmentHistoryLatest }}
-            </div>
+        <div>
+            {{ environmentProfile?.name }} - {{ environmentProfile?.descr }}
+        </div>
+        <div class="hidden">
+            {{ environment }}
+        </div>
+        <div>
+            {{ environmentHistoryLatest }}
         </div>
         <div>
             <EnvironmentHistoryLatest />
         </div>
         <div>
-            {{ messages }}
+            websocket: {{ messages }}
         </div>
     </div>
     
