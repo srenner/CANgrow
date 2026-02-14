@@ -1,4 +1,7 @@
 <script setup lang="ts">
+
+    const props = defineProps(['record']);
+
     // get environment history
 
     /*
@@ -18,16 +21,16 @@
 </script>
 
 <template>
-    <div>
-        light: on
+    <div v-if="record">
+        light: {{ record.light_status }}
         <br>
-        heat: off
+        heat: {{ record.heat_status }}
         <br>
-        temp: 00.0 
+        temp: {{ record.temperature }}
         <br>
-        humid: 00.0 
+        humid: {{ record.humidity }}
         <br>
-        as of {{ now }}
+        as of {{ record.datetime }}
     </div>
 </template>
 

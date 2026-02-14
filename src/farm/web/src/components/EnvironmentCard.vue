@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import router from '@/router';
-import { useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router';
 
   useRouter();
   const props = defineProps(['env']);

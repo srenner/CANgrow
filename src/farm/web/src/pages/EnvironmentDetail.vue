@@ -3,7 +3,7 @@
     import { ref, onMounted, computed } from 'vue'
     import { type EnvironmentHistoryPublic, type EnvironmentProfilePublic, type EnvironmentPublic } from '@/api/types.gen';
     import { Environment as EnvironmentService, EnvironmentProfile as EnvironmentProfileService, EnvironmentHistory as EnvironmentHistoryService } from '@/api/sdk.gen';
-    import EnvironmentHistoryLatest from '@/components/EnvironmentHistoryLatest.vue';
+    import EnvironmentHistorySnapshot from '@/components/EnvironmentHistorySnapshot.vue';
 
     const route = useRoute()
     const id = computed(() => parseInt(route.params.id as string))
@@ -22,7 +22,6 @@
             console.log('WebSocket connected');
         };
         ws.onmessage = (event) => {
-            console.log('Message received');
             messages.value.push(event.data);
             console.log('Message received:', event.data);
         };
@@ -60,7 +59,7 @@
             environmentProfile.value = data;
         }
         catch(err: any) {
-            //
+            console.error(err);
         }
         finally {
             // 
@@ -74,6 +73,7 @@
         }
         catch(err: any) {
             //
+            console.error(err);
         }
         finally {
             //
@@ -85,23 +85,23 @@
 <template>
     
     <h1>
-        <span>{{ environment?.name }}</span>
+        <span><strong>ENVIRONMENT:</strong> {{ environment?.name }}</span>
         <span v-if="environment?.descr">{{ ' - ' + environment.descr }}</span>
     </h1>
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
         <div>
-            {{ environmentProfile?.name }} - {{ environmentProfile?.descr }}
+            <strong>ACTIVE PROFILE:</strong> {{ environmentProfile?.name }} - {{ environmentProfile?.descr }}
+        </div>
+        <div>
+            <EnvironmentHistorySnapshot :record="environmentHistoryLatest" />
         </div>
         <div class="hidden">
             {{ environment }}
         </div>
-        <div>
+        <div class="hidden">
             {{ environmentHistoryLatest }}
-        </div>
-        <div>
-            <EnvironmentHistoryLatest />
         </div>
         <div>
             websocket: {{ messages }}
