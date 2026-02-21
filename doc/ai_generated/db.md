@@ -1,4 +1,4 @@
-# Plant Monitoring System - Database Schema
+# CANgrow Gardening System - Database Schema
 
 ## Entity Relationship Diagram
 
