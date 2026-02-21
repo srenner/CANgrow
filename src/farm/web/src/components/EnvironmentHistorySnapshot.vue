@@ -1,6 +1,7 @@
 <script setup lang="ts">
-
+    import { useDateFormatter } from '@/composables/useDateFormatter';
     const props = defineProps(['record']);
+    const { formatDate } = useDateFormatter();
 
     // get environment history
 
@@ -30,7 +31,7 @@
         <br>
         humid: {{ record.humidity }}
         <br>
-        as of {{ record.datetime }}
+        as of {{ formatDate(record.datetime) }}
     </div>
 </template>
 
