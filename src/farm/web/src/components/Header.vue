@@ -3,7 +3,6 @@
     import { MoonIcon, SunIcon } from '@heroicons/vue/24/solid'
     import { useDarkMode } from '../composables/useDarkMode';
     const { isDark, toggleDark } = useDarkMode();
-
 </script>
 
 <template>
@@ -17,10 +16,7 @@
                 <MoonIcon class="size-6"></MoonIcon>
             </span>
         </button>
-        {{ isDark }}
-        
     </header>
-
     <hr class="mt-2 mb-2">
 </template>
 
