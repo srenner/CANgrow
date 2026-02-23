@@ -52,8 +52,6 @@ async def post_live_environment_history(*, environment_history: EnvironmentHisto
     disconnected = []
     for env_id, connection in ws_connections.items():
         try:
-              #await connection.send_json({id: 1})
-              # await connection.send_text("hello ws")
               await connection.send_json(validated_environment_history.model_dump())
         except:
             disconnected.append(env_id)

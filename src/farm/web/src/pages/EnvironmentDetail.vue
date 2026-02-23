@@ -22,7 +22,7 @@
             console.log('WebSocket connected');
         };
         ws.onmessage = (event) => {
-            messages.value.push(event.data);
+            messages.value.push(JSON.parse(event.data));
             console.log('Message received:', event.data);
         };
         ws.onerror = (error) => {
