@@ -23,7 +23,7 @@
         };
         ws.onmessage = (event) => {
             messages.value.push(JSON.parse(event.data));
-            console.log('Message received:', event.data);
+            environmentHistoryLatest.value = JSON.parse(event.data);
         };
         ws.onerror = (error) => {
             console.error('WebSocket error:', error);
@@ -102,9 +102,6 @@
         </div>
         <div class="hidden">
             {{ environmentHistoryLatest }}
-        </div>
-        <div>
-            websocket: {{ messages }}
         </div>
     </div>
     
