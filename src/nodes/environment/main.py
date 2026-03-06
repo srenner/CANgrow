@@ -1,3 +1,7 @@
+"""
+This script runs on the CANgrow Environment nodes
+"""
+
 # import board
 # import digitalio
 import time
