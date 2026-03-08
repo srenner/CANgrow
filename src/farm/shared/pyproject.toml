@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "shared-models"
+name = "cangrow-shared"
 version = "0.1.0"
-description = "Shared database models for CANgrow"
+description = "Shared python objects for CANgrow"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
