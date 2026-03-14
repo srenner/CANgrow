@@ -1,0 +1,45 @@
+## New Install - Blank Database
+
+### Interaction Flow
+
+Site redirects to `wizard`
+
+"Let's get growing"
+
+"Start by naming your crop"
+
+user enters name, next
+
+"How many plants in this crop?"
+
+user enters number or "I'm not sure"
+
+if user entered number
+
+- Wizard goes through x number of name inputs, with incrementing number the default
+- "Next" after each input
+- "Add more" or "Done" on the last plant of crop size x
+
+if user entered "I'm not sure"
+
+- Prompt for each plant name, with buttons for "Add another" and "Done"
+
+Name the environment the plants are growing in. Something like "Grow Tent" or "Sunroom" could work.
+
+The environment can be adjusted for different phases of growth. For example, there might be more hours of daylight for the germination phase than the flowering phase. Which phase are your plants in now?
+
+Prompt user to name the phase or "Skip"
+
+If skipped, a default phase is created.
+
+"Select the hours to have the grow light on"
+
+"Select the optimum temperature"
+
+"Select the optimum humidity level"
+
+"Select the toptimum airflow level"
+
+---
+
+This will create an Environment, Crop, Plant(s), EnvironmentProfile, and EnvironmentTarget
