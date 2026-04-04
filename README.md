@@ -43,7 +43,7 @@ All of these nodes are daisy-chained on a low voltage, reliable wired CAN bus ne
 
 - FastAPI
 - SQLite
-- Vue.js (Tailwindcss, Reka UI, Chartjs)
+- Vue.js (Tailwindcss, DaisyUI, Chartjs)
 - Message service in Python
 
 ### Environment Nodes

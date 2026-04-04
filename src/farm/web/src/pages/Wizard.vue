@@ -7,6 +7,8 @@
     const hasPlants = ref(false);
     const hasEnvironments = ref(false);
 
+    const cropName = ref('');
+
 
     onMounted(() => {
         //check for crop table
@@ -20,7 +22,9 @@
     });
 
 
-
+    function addCrop() {
+        //add crop to database
+    }
 
 
     function nextStep() {
@@ -44,7 +48,7 @@
                 <p>Start by naming your crop</p>
                 <div>
                     <label for="crop-name">Crop Name:</label>
-                    <input type="text" id="crop-name" name="crop-name"
+                    <input type="text" id="crop-name" name="crop-name" v-model="cropName"
                     class="border dark:bg-gray-600 bg-gray-200 border-gray-300 rounded px-3 py-2 w-full">
                     
                 </div>
