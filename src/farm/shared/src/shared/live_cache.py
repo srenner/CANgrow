@@ -1,6 +1,5 @@
 from collections import deque
 from datetime import datetime, timedelta
-import bisect
 from typing import Any, Deque, Generic, List, Optional, TypeVar
 
 T = TypeVar('T')
