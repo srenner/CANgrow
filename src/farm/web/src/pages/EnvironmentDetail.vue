@@ -47,8 +47,7 @@
         finally {
             loading.value = false;
             if(environment.value?.environment_profile_id !== null) {
-                await loadActiveProfile();
-                await loadLatestHistory();
+                await Promise.all([loadActiveProfile(), loadLatestHistory()]);
             }
         }
     }
