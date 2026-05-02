@@ -29,7 +29,7 @@ def get_latest_environment_history(environmentId: int, session = Depends(get_ses
 
 
     if not environment_history:
-        raise HTTPException(status_code=404)
+        raise HTTPException(status_code=204)
     return environment_history
 
 @router.post("", response_model=EnvironmentHistoryPublic, operation_id="createEnvironmentHistory")
