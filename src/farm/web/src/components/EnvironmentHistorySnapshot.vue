@@ -19,6 +19,8 @@
     // use the history record datetime instead
     const now = new Date(1767408837 * 1000).toLocaleString();
 
+
+
 </script>
 
 <template>
@@ -27,9 +29,9 @@
         <br>
         heat: {{ record.heat_status }}
         <br>
-        temp: {{ record.temperature }}
+        temp: {{ record.temperature.toFixed(1) }}
         <br>
-        humid: {{ record.humidity }}
+        humid: {{ record.humidity.toFixed(1) }}
         <br>
         as of {{ formatDate(record.datetime) }}
     </div>

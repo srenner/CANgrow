@@ -4,6 +4,7 @@
     import { type EnvironmentHistoryPublic, type EnvironmentProfilePublic, type EnvironmentPublic } from '@/api/types.gen';
     import { Environment as EnvironmentService, EnvironmentProfile as EnvironmentProfileService, EnvironmentHistory as EnvironmentHistoryService } from '@/api/sdk.gen';
     import EnvironmentHistorySnapshot from '@/components/EnvironmentHistorySnapshot.vue';
+    import LiveChart from '../components/LiveChart.vue';
 
     const route = useRoute()
     const id = computed(() => parseInt(route.params.id as string))
@@ -14,6 +15,7 @@
     const loading = ref(false);
     const error = ref<string | null>(null);
     let messages: any = ref<string[]>([]);
+    const temps = ref<Number[]>([]);
 
     onMounted(() => {
         loadEnvironment();
@@ -22,7 +24,10 @@
             console.log('WebSocket connected');
         };
         ws.onmessage = (event) => {
-            messages.value.push(JSON.parse(event.data));
+            let msgObject = JSON.parse(event.data);
+            messages.value.push(msgObject);
+            temps.value.push(msgObject.temperature);
+            let x: number[] = temps.value.length;
             environmentHistoryLatest.value = JSON.parse(event.data);
         };
         ws.onerror = (error) => {
@@ -79,6 +84,19 @@
         }
     }
 
+    const opts: uPlot.Options = {
+        width: 600,
+        height: 300,
+
+        series: [
+        {},
+        {
+            label: "Values",
+            stroke: "blue",
+        },
+        ],
+    };
+
 </script>
 
 <template>
@@ -95,6 +113,10 @@
         </div>
         <div>
             <EnvironmentHistorySnapshot :record="environmentHistoryLatest" />
+        </div>
+        <div>
+            <LiveChart :data="temps" :opts="opts"></LiveChart>
+
         </div>
         <div class="hidden">
             {{ environment }}
