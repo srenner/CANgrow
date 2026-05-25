@@ -5,6 +5,8 @@
     import { Environment as EnvironmentService, EnvironmentProfile as EnvironmentProfileService, EnvironmentHistory as EnvironmentHistoryService } from '@/api/sdk.gen';
     import EnvironmentHistorySnapshot from '@/components/EnvironmentHistorySnapshot.vue';
     import LiveChart from '../components/LiveChart.vue';
+    import { useLiveCache } from '@/composables/useLiveCache';
+import type { ComputedRefSymbol } from '@vue/reactivity';
 
     const route = useRoute()
     const id = computed(() => parseInt(route.params.id as string))
@@ -17,6 +19,17 @@
     let messages: any = ref<string[]>([]);
     const temps = ref<Number[]>([]);
 
+    const liveTemps = useLiveCache<EnvironmentHistoryPublic>(
+        (t) => t.temperature!,
+        (t) => t.datetime,
+        1 * 60 * 1000 // 1min
+    )
+
+    const liveTempValues = computed(() =>
+        liveTemps.items.value.map((item) => item.temperature ?? NaN)
+    );    
+
+
     onMounted(() => {
         loadEnvironment();
         const ws = new WebSocket('ws://localhost:8000/live/ws/environment-history/' + id.value);
@@ -27,8 +40,11 @@
             let msgObject = JSON.parse(event.data);
             messages.value.push(msgObject);
             temps.value.push(msgObject.temperature);
-            let x: number[] = temps.value.length;
             environmentHistoryLatest.value = JSON.parse(event.data);
+
+            liveTemps.add(msgObject);
+
+
         };
         ws.onerror = (error) => {
             console.error('WebSocket error:', error);
@@ -85,15 +101,14 @@
     }
 
     const opts: uPlot.Options = {
-        width: 600,
+        width: 999,
         height: 300,
-
         series: [
-        {},
-        {
-            label: "Values",
-            stroke: "blue",
-        },
+            {},
+            {
+                label: "Temp",
+                stroke: "red",
+            },
         ],
     };
 
@@ -115,8 +130,7 @@
             <EnvironmentHistorySnapshot :record="environmentHistoryLatest" />
         </div>
         <div>
-            <LiveChart :data="temps" :opts="opts"></LiveChart>
-
+            <LiveChart :data="liveTempValues" :opts="opts"></LiveChart>
         </div>
         <div class="hidden">
             {{ environment }}

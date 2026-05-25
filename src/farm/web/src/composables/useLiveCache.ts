@@ -1,0 +1,50 @@
+import { ref, computed, readonly, type Ref } from 'vue';
+
+export function useLiveCache<T>(
+    getValue: (item: T) => number,
+    getTimestamp: (item: T) => number,
+    windowMs = 15 * 60 * 1000
+){
+    const queue = ref<T[]>([]) as Ref<T[]>;
+
+    /** Returns UNIX timestamp of oldest value acceptable */
+    function cutoff(): number {
+        return Date.now() - windowMs;
+    }
+
+    function add(item: T) {
+        console.log(getTimestamp(item) + " : " + cutoff())
+        
+        if(getTimestamp(item) < cutoff()) return;
+        const ts = getTimestamp(item);
+
+        // todo use findLastIndex if upgrade to es2023
+        // const index = queue.value.findLastIndex((q) => getTimestamp(q) <= ts)
+        
+        let index = queue.value.length - 1;
+        while(index >= 0 && getTimestamp(queue.value[index]!) > ts) index--;
+        queue.value.splice(index + 1, 0, item);
+        
+    }
+
+    const items = computed(() => {
+          console.log('items recomputing', queue.value.length);
+          return queue.value.filter((item) => getTimestamp(item) >= cutoff())
+    }
+        
+    );
+
+    function prune() {
+        const c = cutoff();
+        const firstValid = queue.value.findIndex((item) => getTimestamp(item) >= c);
+        if(firstValid === -1) queue.value = [];
+        else if (firstValid > 0) queue.value.splice(0, firstValid);
+    }
+
+    function clear() {
+        queue.value = [];
+    }
+
+    return { add, items, prune, clear };
+
+}
