@@ -1,5 +1,13 @@
 import { ref, computed, readonly, type Ref } from 'vue';
 
+/**
+ * Holds an array of T
+ * 
+ * @param getValue 
+ * @param getTimestamp 
+ * @param windowMs 
+ * @returns 
+ */
 export function useLiveCache<T>(
     getValue: (item: T) => number,
     getTimestamp: (item: T) => number,
@@ -13,26 +21,21 @@ export function useLiveCache<T>(
     }
 
     function add(item: T) {
-        console.log(getTimestamp(item) + " : " + cutoff())
-        
         if(getTimestamp(item) < cutoff()) return;
-        const ts = getTimestamp(item);
+        const itemTimestamp = getTimestamp(item);
 
-        // todo use findLastIndex if upgrade to es2023
+        // todo use findLastIndex if set config to es2023+
         // const index = queue.value.findLastIndex((q) => getTimestamp(q) <= ts)
-        
+
         let index = queue.value.length - 1;
-        while(index >= 0 && getTimestamp(queue.value[index]!) > ts) index--;
+        while(index >= 0 && getTimestamp(queue.value[index]!) > itemTimestamp) index--;
         queue.value.splice(index + 1, 0, item);
-        
     }
 
     const items = computed(() => {
           console.log('items recomputing', queue.value.length);
           return queue.value.filter((item) => getTimestamp(item) >= cutoff())
-    }
-        
-    );
+    });
 
     function prune() {
         const c = cutoff();
@@ -46,5 +49,4 @@ export function useLiveCache<T>(
     }
 
     return { add, items, prune, clear };
-
 }

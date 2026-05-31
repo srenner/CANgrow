@@ -4,9 +4,10 @@
     import { type EnvironmentHistoryPublic, type EnvironmentProfilePublic, type EnvironmentPublic } from '@/api/types.gen';
     import { Environment as EnvironmentService, EnvironmentProfile as EnvironmentProfileService, EnvironmentHistory as EnvironmentHistoryService } from '@/api/sdk.gen';
     import EnvironmentHistorySnapshot from '@/components/EnvironmentHistorySnapshot.vue';
-    import LiveChart from '../components/LiveChart.vue';
+    import LiveChart from '@/components/LiveChart.vue';
     import { useLiveCache } from '@/composables/useLiveCache';
-import type { ComputedRefSymbol } from '@vue/reactivity';
+    import type { ComputedRefSymbol } from '@vue/reactivity';
+import type { AlignedData } from 'uplot';
 
     const route = useRoute()
     const id = computed(() => parseInt(route.params.id as string))
@@ -16,8 +17,6 @@ import type { ComputedRefSymbol } from '@vue/reactivity';
     const environmentHistoryLatest = ref<EnvironmentHistoryPublic>();
     const loading = ref(false);
     const error = ref<string | null>(null);
-    let messages: any = ref<string[]>([]);
-    const temps = ref<Number[]>([]);
 
     const liveTemps = useLiveCache<EnvironmentHistoryPublic>(
         (t) => t.temperature!,
@@ -25,10 +24,11 @@ import type { ComputedRefSymbol } from '@vue/reactivity';
         1 * 60 * 1000 // 1min
     )
 
-    const liveTempValues = computed(() =>
-        liveTemps.items.value.map((item) => item.temperature ?? NaN)
-    );    
-
+    const liveTempAlignedData = computed<AlignedData>(() => {
+        const timestamps = liveTemps.items.value.map((t) => t.datetime);
+        const temps = liveTemps.items.value.map((t) => t.temperature ?? NaN);
+        return [timestamps, temps];
+    });
 
     onMounted(() => {
         loadEnvironment();
@@ -38,13 +38,8 @@ import type { ComputedRefSymbol } from '@vue/reactivity';
         };
         ws.onmessage = (event) => {
             let msgObject = JSON.parse(event.data);
-            messages.value.push(msgObject);
-            temps.value.push(msgObject.temperature);
-            environmentHistoryLatest.value = JSON.parse(event.data);
-
+            environmentHistoryLatest.value = msgObject;
             liveTemps.add(msgObject);
-
-
         };
         ws.onerror = (error) => {
             console.error('WebSocket error:', error);
@@ -62,8 +57,7 @@ import type { ComputedRefSymbol } from '@vue/reactivity';
             environment.value = data;
         }
         catch(err: any) {
-            error.value = err.message || 'Error loading environment ' + id
-
+            error.value = err.message || 'Error loading environment ' + id;
         }
         finally {
             loading.value = false;
@@ -88,8 +82,11 @@ import type { ComputedRefSymbol } from '@vue/reactivity';
 
     async function loadLatestHistory() {
         try {
-            const { data } = await EnvironmentHistoryService.getLatestEnvironmentHistory({path: { environmentId: id.value }})
-            environmentHistoryLatest.value = data;
+            //pull from table
+            //const { data } = await EnvironmentHistoryService.getLatestEnvironmentHistory({path: { environmentId: id.value }})
+            //environmentHistoryLatest.value = data;
+
+            //const cache = await LiveE
         }
         catch(err: any) {
             //
@@ -130,7 +127,7 @@ import type { ComputedRefSymbol } from '@vue/reactivity';
             <EnvironmentHistorySnapshot :record="environmentHistoryLatest" />
         </div>
         <div>
-            <LiveChart :data="liveTempValues" :opts="opts"></LiveChart>
+            <LiveChart :data="liveTempAlignedData" :opts="opts"></LiveChart>
         </div>
         <div class="hidden">
             {{ environment }}

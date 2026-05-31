@@ -1,31 +1,20 @@
-<script setup>
+<script setup lang="ts">
     import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
-    import uPlot from 'uplot';
+    import uPlot, { type AlignedData } from 'uplot';
     import 'uplot/dist/uPlot.min.css';
 
-    const props = defineProps({
-        data: {
-            type: Array,
-            required: true
-        },
-        opts: {
-            type: Object,
-            required: true
-        }
-    });
+    const props = defineProps<{
+        data: AlignedData;
+        opts: uPlot.Options;
+    }>();
 
-    const chart = ref(null);
-    let plot = null;
-
-    let chartData = [
-        props.data.map((_,i) => i),
-        props.data
-    ];
+    const chart = ref<HTMLDivElement>();
+    let plot : uPlot | null = null;
 
     // ### LIFECYCLE #######
 
     onMounted(() => {
-        plot = new uPlot(props.opts, chartData, chart.value);        
+        plot = new uPlot(props.opts, props.data, chart.value);        
     });
 
     onBeforeUnmount(() => {
@@ -37,11 +26,7 @@
     // ### WATCHERS #######
 
     watch(() => props.data, (newData) => {
-        let chartData = [
-            newData.map((_,i) => i),
-            newData
-        ]
-        plot?.setData(chartData)
+        plot?.setData(props.data)
     }, { deep: true });
 
     watch(() => props.opts, (newOpts) => {
@@ -50,8 +35,6 @@
     }, { deep: true })
 
     // ### END WATCHERS ###
-
-
 
 </script>
 
