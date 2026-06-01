@@ -1,11 +1,14 @@
+import logging
 from typing import List
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import create_engine
 from sqlmodel import Session
 from shared.config import Settings
 from shared.live_cache import LiveCache
 from shared.models.environment_history import EnvironmentHistory, EnvironmentHistoryCreate, EnvironmentHistoryPublic
+
+logger = logging.getLogger(__name__)
 
 environment_history_cache = LiveCache[EnvironmentHistory](
     timestamp_attr=EnvironmentHistory.datetime.key, 
@@ -32,7 +35,11 @@ def get_live_environment_history():
 
 @router.get("/environment-history/{environmentId}", response_model=List[EnvironmentHistoryPublic])
 def get_live_environment_history_by_group(environmentId: int):
-        return jsonable_encoder(environment_history_cache.get_group(environmentId))
+        try:
+            return jsonable_encoder(environment_history_cache.get_group(environmentId))
+        except Exception as exc:
+            logger.error(f"Error fetching environment history for environment {environmentId}: {exc}", exc_info=True)
+            raise HTTPException(status_code=500, detail="Unable to fetch live environment history")
 
 @router.websocket("/ws/environment-history/{environmentId}")
 async def environment_history_ws(websocket: WebSocket, environmentId: int):
