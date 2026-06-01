@@ -82,7 +82,6 @@
         }
     }
 
-
     async function loadHistoryCacheFromServer() {
         try {
             const { data } = await LiveService.getLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGet({
@@ -102,7 +101,10 @@
         }
     }
 
-    /** obsolete */
+    /**
+     * Loads the most recent EnvironmentHistory record
+     * @deprecated Use `loadHistoryCacheFromServer()` instead
+     */
     async function loadLatestHistory() {
         try {
             const { data } = await EnvironmentHistoryService.getLatestEnvironmentHistory({path: { environmentId: id.value }})
@@ -148,9 +150,6 @@
         </div>
         <div>
             <LiveChart :data="liveTempAlignedData" :opts="opts"></LiveChart>
-        </div>
-        <div class="hidden">
-            {{ environment }}
         </div>
         <div class="hidden">
             {{ environmentHistoryLatest }}
