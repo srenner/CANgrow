@@ -2,7 +2,10 @@
     import { useRoute } from 'vue-router';
     import { ref, onMounted, computed } from 'vue'
     import { type EnvironmentHistoryPublic, type EnvironmentProfilePublic, type EnvironmentPublic } from '@/api/types.gen';
-    import { Environment as EnvironmentService, EnvironmentProfile as EnvironmentProfileService, EnvironmentHistory as EnvironmentHistoryService } from '@/api/sdk.gen';
+    import {    Environment as EnvironmentService, 
+                EnvironmentHistory as EnvironmentHistoryService,
+                EnvironmentProfile as EnvironmentProfileService,
+                Live as LiveService } from '@/api/sdk.gen';
     import EnvironmentHistorySnapshot from '@/components/EnvironmentHistorySnapshot.vue';
     import LiveChart from '@/components/LiveChart.vue';
     import { useLiveCache } from '@/composables/useLiveCache';
@@ -62,7 +65,7 @@ import type { AlignedData } from 'uplot';
         finally {
             loading.value = false;
             if(environment.value?.environment_profile_id !== null) {
-                await Promise.all([loadActiveProfile(), loadLatestHistory()]);
+                await Promise.all([loadActiveProfile(), loadHistoryCacheFromServer()]);
             }
         }
     }
@@ -80,13 +83,31 @@ import type { AlignedData } from 'uplot';
         }
     }
 
+
+    async function loadHistoryCacheFromServer() {
+        try {
+            const { data } = await LiveService.getLiveEnvironmentHistoryByGroupLiveEnvironmentHistoryEnvironmentIdGet({
+                path: { environmentId: id.value }
+            });
+            if(data && data.length > 0) {
+                environmentHistoryLatest.value = data[data.length - 1];
+                data.forEach((record) => liveTemps.add(record));
+            }
+        }
+        catch(err: any) {
+            //
+            console.error(err);
+        }
+        finally {
+            //
+        }
+    }
+
+    /** obsolete */
     async function loadLatestHistory() {
         try {
-            //pull from table
-            //const { data } = await EnvironmentHistoryService.getLatestEnvironmentHistory({path: { environmentId: id.value }})
-            //environmentHistoryLatest.value = data;
-
-            //const cache = await LiveE
+            const { data } = await EnvironmentHistoryService.getLatestEnvironmentHistory({path: { environmentId: id.value }})
+            environmentHistoryLatest.value = data;
         }
         catch(err: any) {
             //
