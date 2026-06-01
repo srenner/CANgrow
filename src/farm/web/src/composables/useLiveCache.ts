@@ -1,4 +1,4 @@
-import { ref, computed, readonly, type Ref } from 'vue';
+import { ref, computed, type Ref } from 'vue';
 
 /**
  * Holds an array of T
@@ -23,9 +23,6 @@ export function useLiveCache<T>(
     function add(item: T) {
         if(getTimestamp(item) < cutoff()) return;
         const itemTimestamp = getTimestamp(item);
-
-        // todo use findLastIndex if set config to es2023+
-        // const index = queue.value.findLastIndex((q) => getTimestamp(q) <= ts)
 
         let index = queue.value.length - 1;
         while(index >= 0 && getTimestamp(queue.value[index]!) > itemTimestamp) index--;
