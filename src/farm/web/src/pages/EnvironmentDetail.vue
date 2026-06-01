@@ -9,8 +9,7 @@
     import EnvironmentHistorySnapshot from '@/components/EnvironmentHistorySnapshot.vue';
     import LiveChart from '@/components/LiveChart.vue';
     import { useLiveCache } from '@/composables/useLiveCache';
-    import type { ComputedRefSymbol } from '@vue/reactivity';
-import type { AlignedData } from 'uplot';
+    import type { AlignedData } from 'uplot';
 
     const route = useRoute()
     const id = computed(() => parseInt(route.params.id as string))
