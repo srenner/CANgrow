@@ -25,13 +25,9 @@
 
     // ### WATCHERS #######
 
-    watch(() => props.data, (newData) => {
-        plot?.setData(props.data)
-    }, { deep: true });
-
-    watch(() => props.opts, (newOpts) => {
+    watch(() => [props.data, props.opts], () => {
         plot?.destroy();
-        plot = new uPlot(newOpts, props.data, chart.value);
+        plot = new uPlot(props.opts, props.data, chart.value);
     }, { deep: true })
 
     // ### END WATCHERS ###
@@ -41,3 +37,4 @@
 <template>
     <div ref="chart"></div>
 </template>
+
