@@ -27,7 +27,8 @@
 
     watch(() => [props.data, props.opts], () => {
         plot?.destroy();
-        plot = new uPlot(props.opts, props.data, chart.value);
+        const processedData: any[] = [[...props.data[0].map(t => t / 1000)], props.data[1]];
+        plot = new uPlot(props.opts, processedData, chart.value);
     }, { deep: true })
 
     // ### END WATCHERS ###

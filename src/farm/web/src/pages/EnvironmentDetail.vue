@@ -27,8 +27,8 @@
     )
 
     const liveTempAlignedData = computed<AlignedData>(() => {
-        const timestamps = liveTemps.items.value.map((t) => t.datetime);
-        const temps = liveTemps.items.value.map((t) => t.temperature ?? NaN);
+        const timestamps: number[] = liveTemps.items.value.map((t) => t.datetime);
+        const temps: number[] = liveTemps.items.value.map((t) => t.temperature ?? NaN);
         return [timestamps, temps];
     });
 
@@ -129,6 +129,11 @@
                 stroke: "red",
             },
         ],
+        scales: {
+            "x": {
+                time: true,
+            }
+        }
     };
 
 </script>

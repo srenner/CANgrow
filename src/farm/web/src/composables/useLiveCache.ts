@@ -30,7 +30,6 @@ export function useLiveCache<T>(
     }
 
     const items = computed(() => {
-          console.log('items recomputing', queue.value.length);
           return queue.value.filter((item) => getTimestamp(item) >= cutoff())
     });
 
