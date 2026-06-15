@@ -128,12 +128,7 @@
                 label: "Temp",
                 stroke: "red",
             },
-        ],
-        scales: {
-            "x": {
-                time: true,
-            }
-        }
+        ]
     };
 
 </script>
