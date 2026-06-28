@@ -20,6 +20,8 @@
     const loading = ref(false);
     const error = ref<string | null>(null);
 
+    let resizeObserver: ResizeObserver | null = null;
+
     const liveTemps = useLiveCache<EnvironmentHistoryPublic>(
         (t) => t.temperature!,
         (t) => t.datetime,
@@ -31,6 +33,8 @@
         const temps: number[] = liveTemps.items.value.map((t) => t.temperature ?? NaN);
         return [timestamps, temps];
     });
+
+    const chartContainer = ref<HTMLElement | null>(null);
 
     onMounted(() => {
         loadEnvironment();
@@ -48,6 +52,34 @@
         };
         ws.onclose = (event) => {
             console.log('WebSocket closed:', event.code, event.reason);
+        };
+    });
+
+    const chartOptions = computed(() => {
+        console.log('chartOptions computing: ' + chartContainer.value?.clientWidth)
+        if (!chartContainer.value) {
+            return {
+                width: 900,
+                height: 300,
+                series: [
+                    {},
+                    {
+                        label: "Temp",
+                        stroke: "red",
+                    },
+                ]
+            };
+        }
+        return {
+            width: chartContainer.value.clientWidth,
+            height: 300,
+            series: [
+                {},
+                {
+                    label: "Temp",
+                    stroke: "red",
+                },
+            ]
         };
     });
 
@@ -78,7 +110,7 @@
             console.error(err);
         }
         finally {
-            // 
+            //
         }
     }
 
@@ -118,23 +150,9 @@
             //
         }
     }
-
-    const opts: uPlot.Options = {
-        width: 999,
-        height: 300,
-        series: [
-            {},
-            {
-                label: "Temp",
-                stroke: "red",
-            },
-        ]
-    };
-
 </script>
 
 <template>
-    
     <h1>
         <span><strong>ENVIRONMENT:</strong> {{ environment?.name }}</span>
         <span v-if="environment?.descr">{{ ' - ' + environment.descr }}</span>
@@ -149,13 +167,18 @@
             <EnvironmentHistorySnapshot :record="environmentHistoryLatest" />
         </div>
         <div>
-            <LiveChart :data="liveTempAlignedData" :opts="opts"></LiveChart>
+            <div id="chart-container">
+                <LiveChart :data="liveTempAlignedData" :opts="chartOptions"></LiveChart>
+            </div>
         </div>
         <div class="hidden">
             {{ environmentHistoryLatest }}
-        </div>
     </div>
-    
+    </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+    #chart-container {
+        
+    }
+</style>
